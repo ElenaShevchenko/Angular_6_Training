@@ -16,4 +16,12 @@ export class CourseListComponent implements OnInit {
     this.courseList = this.courseService.getCourseList();
   }
 
+  removeCourse(id) {
+    console.log('remove course' + id);
+  }
+
+  loadMore () {
+    console.log('Load more');
+  }
+
 }

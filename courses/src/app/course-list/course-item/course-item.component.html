@@ -21,7 +21,10 @@
     </div>
     <div class="col-2">
       <button type="button" class="btn btn-success btn-block">Edit</button>
-      <button type="button" class="btn btn-danger btn-block">Delete</button>
+      <button type="button"
+              class="btn btn-danger btn-block"
+              (click)="removeCourse(courseItem.id)">
+        Delete</button>
     </div>
   </div>
 </div>

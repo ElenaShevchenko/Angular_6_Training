@@ -3,13 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {CoreModule} from './core/core.module';
+import { CoreModule } from './core/core.module';
 
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import {CourseListModule} from './course-list/course-list.module';
-import {UserModule} from './user/user.module';
+import { CourseListModule } from './course-list/course-list.module';
+import { UserModule } from './user/user.module';
+import { RouterModule } from '@angular/router';
+
+import {CourseListComponent} from './course-list/course-list/course-list.component';
+
 
 @NgModule({
   declarations: [
@@ -28,4 +32,5 @@ import {UserModule} from './user/user.module';
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

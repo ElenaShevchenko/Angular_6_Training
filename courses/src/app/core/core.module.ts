@@ -6,6 +6,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { SearchComponent } from './search/search.component';
 import { FooterComponent } from './footer/footer.component';
 import { AddCourseComponent } from './add-course/add-course.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AddCourseComponent } from './add-course/add-course.component';
     AddCourseComponent],
   imports: [
     CommonModule,
+    FormsModule
   ],
   exports: [
     HeaderComponent,
