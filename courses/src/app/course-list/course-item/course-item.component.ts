@@ -8,15 +8,15 @@ import {CourseItem} from '../course-item.model';
 })
 export class CourseItemComponent implements OnInit {
   @Input() public courseItem: CourseItem;
-  @Output() clickButton = new EventEmitter();
+  @Output() clickButton = new EventEmitter<CourseItem>();
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  removeCourse (id) {
-    this.clickButton.emit(id);
+  removeCourse () {
+    this.clickButton.emit(this.courseItem);
   }
 
 }

@@ -1,8 +1,8 @@
-<div class="list-group">
+<div class="list-group course-list">
   <app-course-item *ngFor="let item of courseList"
                    [courseItem] = "item"
                    (clickButton)='removeCourse($event)'></app-course-item>
   <button type="button"
-          class="btn btn-success btn-block mt-3 mb-5"
+          class="btn btn-success btn-block mt-3 mb-5 load-more-button"
           (click)="loadMore()">Load More...</button>
 </div>

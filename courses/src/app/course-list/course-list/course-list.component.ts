@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseItem } from '../course-item.model';
-import {CourseService} from '../course.service';
+import { CourseService } from '../course.service';
 
 @Component({
   selector: 'app-course-list',
@@ -16,8 +16,8 @@ export class CourseListComponent implements OnInit {
     this.courseList = this.courseService.getCourseList();
   }
 
-  removeCourse(id) {
-    console.log('remove course' + id);
+  removeCourse(item) {
+    console.log('remove course' + item.id);
   }
 
   loadMore () {
