@@ -43,7 +43,7 @@ describe('CourseItemComponent', () => {
     let selectedCourse: CourseItem;
     component.clickButton.subscribe((item: CourseItem) => selectedCourse = item);
 
-    itemDe.removeCourse();
+    itemDe.triggerEventHandler('click', null);
     expect(selectedCourse).toBe(expectedItem);
   });
 });

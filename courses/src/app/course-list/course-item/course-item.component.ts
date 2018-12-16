@@ -15,7 +15,7 @@ export class CourseItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  removeCourse () {
+  click () {
     this.clickButton.emit(this.courseItem);
   }
 
