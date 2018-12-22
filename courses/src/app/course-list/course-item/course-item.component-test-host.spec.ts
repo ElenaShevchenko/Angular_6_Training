@@ -4,6 +4,9 @@ import { Component } from '@angular/core';
 
 import { CourseItemComponent } from './course-item.component';
 import { CourseItem } from '../course-item.model';
+import { HighlightItemDirective } from '../highlightItem.directive';
+import { DurationPipe } from '../../custom-pipes/duration.pipe';
+
 
 @Component({
   templateUrl: './course-item.component.html',
@@ -14,7 +17,8 @@ class TestHostComponent {
     title: 'CourseTitle',
     creationDate: new Date(),
     durationInMin: 115,
-    description: 'something'
+    description: 'something',
+    topRated: true
   };
   public selectedItem: CourseItem;
   public click(item: CourseItem) { this.selectedItem = item; }
@@ -29,7 +33,7 @@ describe('CourseItemComponent', () => {
   beforeEach(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, TestHostComponent ]
+      declarations: [ CourseItemComponent, TestHostComponent, HighlightItemDirective, DurationPipe ]
     });
   });
 
@@ -51,7 +55,8 @@ describe('CourseItemComponent', () => {
       title: 'Course Title',
       creationDate: new Date(),
       durationInMin: 115,
-      description: 'something'
+      description: 'something',
+      topRated: true
     };
 
     const removeButton = fixture.debugElement.query(By.css('.remove-button'));

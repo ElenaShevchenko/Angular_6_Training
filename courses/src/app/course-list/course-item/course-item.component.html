@@ -1,13 +1,18 @@
 <div class="list-group-item"
+     [appHighlightItem] = "courseItem.creationDate"
+     [ngClass]="{'bg-warning': courseItem.topRated}"
      data-toggle="list" role="tab">
   <div class="row">
     <div class="col-10">
       <div class="row">
         <div class="col-8">
-          <h3>{{courseItem.title}}</h3>
+          <h3>{{courseItem.title | uppercase}}
+            <span
+              *ngIf="courseItem.topRated"
+              class="oi oi-star" title="rate" aria-hidden="true"></span></h3>
         </div>
         <div class="col-2">
-         {{courseItem.durationInMin}}
+         {{courseItem.durationInMin | duration}}
         </div>
         <div class="col-2">
          {{courseItem.creationDate | date: 'dd/MM/yyyy'}}

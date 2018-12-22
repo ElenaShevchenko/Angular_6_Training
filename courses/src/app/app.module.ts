@@ -10,14 +10,11 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CourseListModule } from './course-list/course-list.module';
 import { UserModule } from './user/user.module';
-import { RouterModule } from '@angular/router';
-
-import {CourseListComponent} from './course-list/course-list/course-list.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +26,6 @@ import {CourseListComponent} from './course-list/course-list/course-list.compone
     TooltipModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 

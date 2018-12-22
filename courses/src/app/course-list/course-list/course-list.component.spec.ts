@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CourseListComponent } from './course-list.component';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CourseService } from '../course.service';
-import { CourseItem } from '../course-item.model';
+import { OrderByPipe } from '../../custom-pipes/order-by.pipe';
 
 
 describe('CourseListComponent', () => {
@@ -17,8 +17,8 @@ describe('CourseListComponent', () => {
   beforeEach(async(() => {
     courseService = { getCourseList: jasmine.createSpy('getCourseList') };
     TestBed.configureTestingModule({
-      declarations: [ CourseListComponent ],
-      schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      declarations: [ CourseListComponent, OrderByPipe ],
+      schemas: [ NO_ERRORS_SCHEMA ],
       providers: [ {provide: CourseService, useValue: courseService } ]
     })
     .compileComponents();
