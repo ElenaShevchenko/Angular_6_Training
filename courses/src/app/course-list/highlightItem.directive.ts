@@ -13,7 +13,6 @@ export class HighlightItemDirective implements OnInit {
     const copyDate: Date = new Date();
     const minDate = copyDate.setDate(currentDate.getDate() - 14);
 
-    console.log(minDate);
      if ((this.itemDate.getTime() < currentDate.getTime()) && (this.itemDate.getTime() >= minDate)) {
        this.render.setStyle(this.el.nativeElement, 'border-color', 'green');
      } else if (this.itemDate.getTime() > currentDate.getTime()) {

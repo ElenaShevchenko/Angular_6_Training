@@ -10,6 +10,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CourseListModule } from './course-list/course-list.module';
 import { UserModule } from './user/user.module';
+import { AuthorizationModule } from './authorization/authorization.module';
+import { AuthorizationService } from './authorization.service';
 
 
 @NgModule({
@@ -22,9 +24,13 @@ import { UserModule } from './user/user.module';
     CoreModule,
     CourseListModule,
     UserModule,
+    AuthorizationModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot()
+  ],
+  providers: [
+    AuthorizationService
   ],
   bootstrap: [AppComponent]
 })

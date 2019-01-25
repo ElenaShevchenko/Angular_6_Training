@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CourseItem} from './course-item.model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
+  private list: CourseItem[];
 
-  constructor() { }
-
-  public  getCourseList(): CourseItem[] {
-    return [
+  constructor() {
+    this.list =  [
       {
         id: 1,
         title: 'Course',
@@ -51,5 +51,34 @@ export class CourseService {
         topRated: false
       },
     ];
+  }
+
+  public  getCourseList(): CourseItem[] {
+    return this.list;
+  }
+
+  public  createCourse(item): any {
+     return this.list.concat([item]);
+  }
+  public  getCourseById(id): CourseItem {
+    return this.list.find((element) => element.id === id);
+  }
+  public  updateCourse(item): CourseItem[] {
+     return this.list.map ((elem) => {
+      if (elem.id === item.id) {
+        return item;
+      } else  {
+        return elem; }
+      });
+  }
+  public  removeCourse(id): any {
+    const list = [...this.list];
+    this.list.forEach((elem, index, arr) => {
+      if (elem.id === id) {
+        return list.splice (index, 1);
+      }
+    });
+    this.list = list;
+    return list;
   }
 }

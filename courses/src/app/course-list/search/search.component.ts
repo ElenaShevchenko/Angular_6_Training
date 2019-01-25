@@ -12,7 +12,7 @@ export class SearchComponent implements OnInit {
   searchValue = '';
 
   onSearch() {
-    this.clickButton.emit(this.searchValue);
+    this.searchButton.emit(this.searchValue);
   }
 
   ngOnInit() {

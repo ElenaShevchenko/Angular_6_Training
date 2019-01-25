@@ -23,7 +23,10 @@ export class CourseListComponent implements OnInit {
   }
 
   removeCourse(item) {
-    console.log('remove course' + item.id);
+    const modal = prompt('Do you really want to delete this course?', 'Yes');
+    if (modal) {
+      this.courseList = this.courseService.removeCourse(item.id);
+    }
   }
 
   loadMore () {
