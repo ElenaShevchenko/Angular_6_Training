@@ -1,0 +1,27 @@
+<form>
+  <div class="form-group">
+    <label for="title" class="pb-1">Title</label>
+    <input type="text" 
+           class="form-control" 
+           id="title"
+           name="title"
+           placeholder="Enter Title"
+           [(ngModel)]="newCourseItem.title">
+  </div>
+  <div class="form-group">
+    <label for="description" class="pb-1">Description</label>
+    <textarea class="form-control"
+              name="description"
+              id="description" 
+              rows="3"
+              [(ngModel)]="newCourseItem.description"></textarea>
+  </div>
+  <app-creation-date></app-creation-date>
+  <app-duration></app-duration>
+  <app-author> </app-author>
+  <button type="button" class="btn btn-success"
+    (click)="save()">Save</button>
+  <button type="button"
+          (click)="cancel()"
+          class="btn btn-danger ml-1">Cancel</button>
+</form>

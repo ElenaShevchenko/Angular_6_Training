@@ -4,14 +4,15 @@ import { User } from './user/user.model';
 @Injectable({
   providedIn: 'root'
 })
-const userMask = 'user_';
 
 export class AuthorizationService {
   public isAuthenticated: boolean;
   private user: User;
+  private userMask: string;
 
   constructor() {
     this.isAuthenticated = false;
+    this.userMask = 'user_';
     this.user = {
       id: 123,
       firstName: 'Ivan',
@@ -20,7 +21,7 @@ export class AuthorizationService {
   }
 
   public login () {
-    localStorage.setItem(userMask + this.user.id, this.user.toString());
+    localStorage.setItem(this.userMask + this.user.id, this.user.toString());
     this.isAuthenticated = true;
     console.log('login service');
   }
@@ -31,7 +32,7 @@ export class AuthorizationService {
     if (lsLen > 0) {
       for (let i = 0; i < lsLen; i++) {
         const key = localStorage.key(i);
-        if (key.indexOf(userMask) === 0) {
+        if (key.indexOf(this.userMask) === 0) {
           return localStorage.getItem(key);
         }
       }

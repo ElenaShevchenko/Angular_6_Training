@@ -1,6 +1,6 @@
 <div class="app-container">
     <app-header></app-header>
-    <div class="block container-fluid"
+    <!--<div class="block container-fluid"
          *ngIf="isAuthenticated">
       <nav class="navbar row">
         <div class="col align-self-end text-right">
@@ -11,20 +11,20 @@
                     class="btn btn-danger ml-1">Log off</button>
           </div>
       </nav>
-    </div>
+    </div>-->
 
-    <div *ngIf="isAuthenticated">
+    <div>
       <app-breadcrumbs></app-breadcrumbs>
     </div>
-    <div class="container">
-      <div *ngIf="!isAuthenticated">
+   <!-- <div class="container">
+      <div>
         <app-authorization></app-authorization>
       </div>
-      <p *ngIf="isAuthenticated"
+      <p
         class="text-center text-danger font-weight-bold">Logged in successfully</p>
-    </div>
+    </div>-->
     <div class="container"
-         *ngIf="isAuthenticated">
+         >
       <router-outlet></router-outlet>
     </div>
 </div>

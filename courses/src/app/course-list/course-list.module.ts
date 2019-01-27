@@ -9,6 +9,10 @@ import { FilterPipe } from '../custom-pipes/filter.pipe';
 import { SearchComponent } from './search/search.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { FormsModule } from '@angular/forms';
+import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
+import { CreationDateComponent } from './creation-date/creation-date.component';
+import { DurationComponent } from './duration/duration.component';
+import { AuthorComponent } from './author/author.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { FormsModule } from '@angular/forms';
     DurationPipe,
     SearchComponent,
     AddCourseComponent,
-    FilterPipe
+    FilterPipe,
+    AddCoursePageComponent,
+    CreationDateComponent,
+    DurationComponent,
+    AuthorComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +37,8 @@ import { FormsModule } from '@angular/forms';
     CourseListComponent,
     CourseItemComponent,
     SearchComponent,
-    AddCourseComponent
+    AddCourseComponent,
+    AddCoursePageComponent
   ]
 })
 export class CourseListModule { }

@@ -1,0 +1,23 @@
+<div class="form-group">
+    <div class="row">
+      <div class="col-4">
+
+          <label for="duration" class="pb-1">Duration</label>
+          <input type="text"
+                 class="form-control"
+                 id="duration" placeholder="28"
+                 name="duration"
+                 [(ngModel)]="durationInMin">
+
+      </div>
+      <div class="col-8">
+        <label class="pb-1"></label>
+       <div class="form-control-plaintext">
+         In {{durationInMin | duration}}
+       </div>
+      </div>
+    </div>
+</div>
+
+
+

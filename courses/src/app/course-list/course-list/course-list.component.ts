@@ -10,11 +10,13 @@ import { FilterPipe } from '../../custom-pipes/filter.pipe';
 })
 export class CourseListComponent implements OnInit {
   public courseList: CourseItem[] = [];
+  public isCoursePageOpened: boolean;
 
   constructor(private courseService: CourseService, private _filterPipe: FilterPipe) { }
 
   ngOnInit() {
     this.courseList = this.courseService.getCourseList();
+    this.isCoursePageOpened = false;
   }
 
   doSearch(searchValue) {
@@ -29,8 +31,17 @@ export class CourseListComponent implements OnInit {
     }
   }
 
+  triggerAddCoursePage(isOpen) {
+    console.log(isOpen);
+    this.isCoursePageOpened = isOpen;
+  }
+
   loadMore () {
     console.log('Load more');
+  }
+
+  addCourse() {
+    this.isCoursePageOpened = false;
   }
 
 }

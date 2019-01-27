@@ -1,0 +1,7 @@
+export interface NewCourseModel {
+  title: string;
+  creationDate: Date;
+  durationInMin: number;
+  description: string;
+  author: string;
+}
