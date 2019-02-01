@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { LogoComponent } from './logo/logo.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './footer/footer.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     LogoComponent,
     BreadcrumbsComponent,
-    FooterComponent, ],
+    FooterComponent,
+    PageNotFoundComponent, ],
   imports: [
     CommonModule
   ],
