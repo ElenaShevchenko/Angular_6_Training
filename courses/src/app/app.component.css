@@ -13,3 +13,7 @@
 .container {
   margin: 0 auto;
 }
+
+.btn-logoff {
+  padding: .375rem .75rem !important;
+}

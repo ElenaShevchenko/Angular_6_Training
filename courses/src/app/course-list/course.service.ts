@@ -17,6 +17,7 @@ export class CourseService {
         durationInMin: 60,
         description: 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
         topRated: true,
+        author: 'Pushkin'
       },
       {
         id: 2,
@@ -25,6 +26,7 @@ export class CourseService {
         durationInMin: 75,
         description: 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
         topRated: false,
+        author: 'Tolkien'
       },
       {
         id: 3,
@@ -33,6 +35,7 @@ export class CourseService {
         durationInMin: 135,
         description: 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
         topRated: false,
+        author: 'Smith'
       },
       {
         id: 4,
@@ -41,6 +44,7 @@ export class CourseService {
         durationInMin: 120,
         description: 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
         topRated: true,
+        author: 'Orange'
       },
       {
         id: 5,
@@ -48,7 +52,8 @@ export class CourseService {
         creationDate: new Date(),
         durationInMin: 34,
         description: 'Contrary to popular belief, Lorem Ipsum is not simply random text.',
-        topRated: false
+        topRated: false,
+        author: 'Lamont'
       },
     ];
   }
@@ -58,10 +63,12 @@ export class CourseService {
   }
 
   public  createCourse(item): any {
+     item.id = this.list.length++;
+     item.topRated = false;
      return this.list.concat([item]);
   }
   public  getCourseById(id): CourseItem {
-    return this.list.find((element) => element.id === id);
+    return this.list.find((element) => (element.id).toString() === id);
   }
   public  updateCourse(item): CourseItem[] {
      return this.list.map ((elem) => {

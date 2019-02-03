@@ -31,17 +31,8 @@ export class CourseListComponent implements OnInit {
     }
   }
 
-  triggerAddCoursePage(isOpen) {
-    console.log(isOpen);
-    this.isCoursePageOpened = isOpen;
-  }
-
   loadMore () {
     console.log('Load more');
-  }
-
-  addCourse() {
-    this.isCoursePageOpened = false;
   }
 
 }

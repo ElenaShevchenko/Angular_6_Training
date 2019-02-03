@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {CourseItem} from '../course-item.model';
+import {Component,  OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-add-course',
@@ -7,14 +6,9 @@ import {CourseItem} from '../course-item.model';
   styleUrls: ['./add-course.component.css']
 })
 export class AddCourseComponent implements OnInit {
-  @Output() triggerAddCoursePage = new EventEmitter<Boolean>();
   constructor() { }
 
   ngOnInit() {
-  }
-
-  click () {
-    this.triggerAddCoursePage.emit(true);
   }
 
 }

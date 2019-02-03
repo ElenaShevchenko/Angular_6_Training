@@ -1,28 +1,18 @@
 <div class="app-container">
     <app-header></app-header>
-    <!--<div class="block container-fluid"
-         *ngIf="isAuthenticated">
+
+    <div class="block container-fluid"
+         *ngIf="this.isAuthenticated">
       <nav class="navbar row">
         <div class="col align-self-end text-right">
             <b>User:</b>
-            <span class="ml-1">Login</span>
+            <span class="ml-1">Login</span>&nbsp;<b>{{userName}}</b>
             <button type="button"
                     (click)="logout()"
-                    class="btn btn-danger ml-1">Log off</button>
+                    class="btn btn-danger ml-1 btn-logoff">Log off</button>
           </div>
       </nav>
-    </div>-->
-
-    <div>
-      <app-breadcrumbs></app-breadcrumbs>
     </div>
-   <!-- <div class="container">
-      <div>
-        <app-authorization></app-authorization>
-      </div>
-      <p
-        class="text-center text-danger font-weight-bold">Logged in successfully</p>
-    </div>-->
     <div class="container">
       <router-outlet></router-outlet>
     </div>

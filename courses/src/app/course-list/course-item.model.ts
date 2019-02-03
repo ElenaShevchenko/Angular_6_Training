@@ -5,4 +5,5 @@ export interface CourseItem {
   durationInMin: number;
   description: string;
   topRated: boolean;
+  author: string;
 }

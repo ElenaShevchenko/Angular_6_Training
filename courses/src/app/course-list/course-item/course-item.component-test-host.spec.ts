@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Component } from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { CourseItemComponent } from './course-item.component';
 import { CourseItem } from '../course-item.model';
@@ -18,7 +18,8 @@ class TestHostComponent {
     creationDate: new Date(),
     durationInMin: 115,
     description: 'something',
-    topRated: true
+    topRated: true,
+    author: 'Pushkin'
   };
   public selectedItem: CourseItem;
   public click(item: CourseItem) { this.selectedItem = item; }
@@ -33,7 +34,8 @@ describe('CourseItemComponent', () => {
   beforeEach(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ CourseItemComponent, TestHostComponent, HighlightItemDirective, DurationPipe ]
+      declarations: [ CourseItemComponent, TestHostComponent, HighlightItemDirective, DurationPipe ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     });
   });
 
@@ -56,7 +58,8 @@ describe('CourseItemComponent', () => {
       creationDate: new Date(),
       durationInMin: 115,
       description: 'something',
-      topRated: true
+      topRated: true,
+      author: 'Pushkin'
     };
 
     const removeButton = fixture.debugElement.query(By.css('.remove-button'));

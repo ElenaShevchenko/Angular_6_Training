@@ -19,5 +19,4 @@ export class CourseItemComponent implements OnInit {
   click () {
     this.clickButton.emit(this.courseItem);
   }
-
 }

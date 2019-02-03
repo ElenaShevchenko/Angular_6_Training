@@ -13,6 +13,9 @@ import { AddCoursePageComponent } from './add-course-page/add-course-page.compon
 import { CreationDateComponent } from './creation-date/creation-date.component';
 import { DurationComponent } from './duration/duration.component';
 import { AuthorComponent } from './author/author.component';
+import { RouterModule } from '@angular/router';
+import { EditCourseComponent } from './edit-course/edit-course.component';
+import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
 
 @NgModule({
   declarations: [
@@ -27,18 +30,23 @@ import { AuthorComponent } from './author/author.component';
     AddCoursePageComponent,
     CreationDateComponent,
     DurationComponent,
-    AuthorComponent
+    AuthorComponent,
+    EditCourseComponent,
+    BreadcrumbsComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports: [
     CourseListComponent,
     CourseItemComponent,
     SearchComponent,
     AddCourseComponent,
-    AddCoursePageComponent
+    AddCoursePageComponent,
+    EditCourseComponent,
+    BreadcrumbsComponent
   ]
 })
 export class CourseListModule { }

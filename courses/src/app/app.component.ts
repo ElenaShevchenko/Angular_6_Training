@@ -1,5 +1,6 @@
-import {Component, OnChanges, OnInit} from '@angular/core';
-
+import {Component, OnInit} from '@angular/core';
+import {AuthorizationService} from './authorization.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,19 +8,21 @@ import {Component, OnChanges, OnInit} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit, OnChanges {
-  public isAuthenticated: boolean;
+export class AppComponent implements OnInit {
   title = 'courses';
+  public userName: string;
+  public isAuthenticated: Boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthorizationService, private router: Router) {}
 
   ngOnInit() {
-  }
-
-  ngOnChanges() {
+    const user = this.authService.getUserInfo();
+    this.userName = user.firstName + ' ' + user.lastName;
+    this.authService.onAuthenticated.subscribe((val) => this.isAuthenticated = val);
   }
 
   logout() {
-    console.log('logout');
+    this.authService.loginOut();
+    this.router.navigate(['/login']);
   }
 }

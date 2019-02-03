@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { NewCourseModel } from '../new-course.model';
+import {CourseService} from '../course.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-course-page',
@@ -8,10 +10,8 @@ import { NewCourseModel } from '../new-course.model';
 })
 export class AddCoursePageComponent implements OnInit {
   public newCourseItem: NewCourseModel;
-  @Output() addButton = new EventEmitter<NewCourseModel>();
-  @Output() cancelButton = new EventEmitter<Boolean>();
 
-  constructor() {
+  constructor(private courseService: CourseService, private router: Router) {
     this.newCourseItem = {
       title: 'title',
       creationDate:  new Date(2018, 4, 5),
@@ -25,11 +25,6 @@ export class AddCoursePageComponent implements OnInit {
   }
 
   save() {
-      this.addButton.emit(this.newCourseItem);
+    this.router.navigate(['/courses']);
   }
-
-  cancel() {
-    this.cancelButton.emit(false);
-  }
-
 }

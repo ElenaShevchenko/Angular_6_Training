@@ -1,0 +1,57 @@
+<div class="row pt-1 pb-3">
+  <app-breadcrumbs></app-breadcrumbs>
+</div>
+<form>
+  <div class="form-group">
+    <label for="title" class="pb-1">Title <span>*</span></label>
+    <input type="text"
+           class="form-control"
+           id="title"
+           name="title"
+           placeholder="Enter Title"
+           [(ngModel)]="courseItem.title">
+  </div>
+  <div class="form-group">
+    <label for="description" class="pb-1">Description <span>*</span></label>
+    <textarea class="form-control"
+              name="description"
+              id="description"
+              rows="3"
+              [(ngModel)]="courseItem.description"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="date" class="pb-1">Date <span>*</span></label>
+    <input type="date"
+           class="form-control"
+           id="date"
+           name="creationDate"
+           [(ngModel)]="courseItem.creationDate"
+           placeholder="05.29.2018">
+  </div>
+  <div class="form-group">
+
+    <label for="duration" class="pb-1">Duration <span>*</span></label>
+    <input type="text"
+           class="form-control"
+           id="duration" placeholder="28"
+           name="duration"
+           [(ngModel)]="courseItem.durationInMin">
+  </div>
+  <div class="form-group">
+    <label for="author" class="pb-1">Author <span>*</span></label>
+    <input type="text"
+           class="form-control"
+           id="author"
+           placeholder="Author"
+           name="author"
+           [(ngModel)]="courseItem.author">
+  </div>
+  <div class="form-group">
+    * Input is required
+  </div>
+
+  <button type="button" class="btn btn-success"
+          (click)="save()">Save</button>
+  <a [routerLink] ="['/courses']"
+     class="btn btn-danger ml-1">Cancel</a>
+</form>

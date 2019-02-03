@@ -25,7 +25,8 @@
       </div>
     </div>
     <div class="col-2">
-      <button type="button" class="btn btn-success btn-block">Edit</button>
+      <a [routerLink] ="['/courses', courseItem.id]"
+         class="btn btn-success btn-block">Edit</a>
       <button type="button"
               class="remove-button btn btn-danger btn-block"
               (click)="click()">

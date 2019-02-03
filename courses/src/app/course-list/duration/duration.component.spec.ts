@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DurationComponent } from './duration.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('DurationComponent', () => {
   let component: DurationComponent;
@@ -8,7 +9,8 @@ describe('DurationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DurationComponent ]
+      declarations: [ DurationComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));

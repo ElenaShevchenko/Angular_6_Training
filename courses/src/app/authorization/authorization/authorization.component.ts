@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../../authorization.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -9,17 +10,15 @@ import { AuthorizationService } from '../../authorization.service';
 })
 
 export class AuthorizationComponent implements OnInit {
-  public isAuthenticated: boolean;
 
-  constructor(private authorizationService: AuthorizationService) { }
+  constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit() {
-    this.isAuthenticated = this.authorizationService.isAuthenticated;
   }
 
   login() {
     this.authorizationService.login();
-    console.log('login');
+    this.router.navigate(['/courses']);
   }
 
 }

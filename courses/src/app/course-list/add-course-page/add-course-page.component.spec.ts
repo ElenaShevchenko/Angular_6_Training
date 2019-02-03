@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddCoursePageComponent } from './add-course-page.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('AddCoursePageComponent', () => {
   let component: AddCoursePageComponent;
@@ -8,7 +9,8 @@ describe('AddCoursePageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddCoursePageComponent ]
+      declarations: [ AddCoursePageComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));
