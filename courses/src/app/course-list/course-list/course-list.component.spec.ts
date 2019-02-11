@@ -5,7 +5,11 @@ import { CourseListComponent } from './course-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CourseService } from '../course.service';
 import { OrderByPipe } from '../../custom-pipes/order-by.pipe';
-
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
+import { Subscription } from 'rxjs';
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -19,6 +23,11 @@ describe('CourseListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CourseListComponent, OrderByPipe ],
       schemas: [ NO_ERRORS_SCHEMA ],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule
+      ],
       providers: [ {provide: CourseService, useValue: courseService } ]
     })
     .compileComponents();

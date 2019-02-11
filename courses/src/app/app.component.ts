@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {AuthorizationService} from './authorization.service';
-import {Router} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AuthorizationService } from './authorization.service';
+import { Router } from '@angular/router';
 import { User } from './user/user.model';
-import { Subscription } from '../../node_modules/rxjs';
+import { Subscription } from 'rxjs';
 
 
 @Component({

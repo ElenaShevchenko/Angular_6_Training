@@ -22,7 +22,7 @@ const APP_PROVIDERS = [
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

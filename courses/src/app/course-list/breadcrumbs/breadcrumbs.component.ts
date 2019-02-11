@@ -24,8 +24,4 @@ export class BreadcrumbsComponent implements OnInit {
       this.courseTitle =  res.name;
     });
   }
-
-
-
-
 }
