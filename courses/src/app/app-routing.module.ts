@@ -3,13 +3,17 @@ import { CourseListComponent } from './course-list/course-list/course-list.compo
 import { AddCoursePageComponent } from './course-list/add-course-page/add-course-page.component';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { EditCourseComponent } from './course-list/edit-course/edit-course.component';
-import {AuthorizationComponent} from './authorization/authorization/authorization.component';
-import {AuthGuard} from './auth.guard';
+import { AuthorizationComponent } from './authorization/authorization/authorization.component';
+import { AuthGuard } from './auth.guard';
 
 export const appRoutes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+    },
   {path: 'login',
-   component: AuthorizationComponent},
+   component: AuthorizationComponent,
+  },
   {path: 'courses',
    component: CourseListComponent,
    canActivate: [AuthGuard]},

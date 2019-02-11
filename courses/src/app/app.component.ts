@@ -1,6 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {AuthorizationService} from './authorization.service';
 import {Router} from '@angular/router';
+import { User } from './user/user.model';
+import { Subscription } from '../../node_modules/rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -8,21 +11,31 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'courses';
-  public userName: string;
+  public user: User;
   public isAuthenticated: Boolean = false;
+  private usersSubscription: Subscription;
 
   constructor(private authService: AuthorizationService, private router: Router) {}
 
   ngOnInit() {
-    const user = this.authService.getUserInfo();
-    this.userName = user.firstName + ' ' + user.lastName;
+    this.init();
     this.authService.onAuthenticated.subscribe((val) => this.isAuthenticated = val);
+  }
+
+  private init(): void {
+   this.usersSubscription = this.authService.getUserInfo().subscribe((res: User) => {
+      this.user = res;
+    });
   }
 
   logout() {
     this.authService.loginOut();
     this.router.navigate(['/login']);
+  }
+
+  public ngOnDestroy(): void {
+    this.usersSubscription.unsubscribe();
   }
 }

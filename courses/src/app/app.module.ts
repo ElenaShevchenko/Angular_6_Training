@@ -12,6 +12,9 @@ import { AuthorizationModule } from './authorization/authorization.module';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app-routing.module';
 import { AuthGuard } from './auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthorizationService } from './authorization.service';
+import { AuthInterceptor } from './auth-interceptor';
 
 const APP_PROVIDERS = [
   AuthGuard
@@ -30,9 +33,12 @@ const APP_PROVIDERS = [
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    RouterModule.forRoot(appRoutes, {useHash: true})
+    RouterModule.forRoot(appRoutes, {useHash: true}),
+    HttpClientModule
   ],
-  providers: [APP_PROVIDERS],
+  providers: [AuthGuard,
+              AuthorizationService,
+              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 

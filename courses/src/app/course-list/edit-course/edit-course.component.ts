@@ -1,7 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CourseItem} from '../course-item.model';
-import {CourseService} from '../course.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { CourseItem } from '../course-item.model';
+import { CourseService } from '../course.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -14,13 +14,24 @@ export class EditCourseComponent implements OnInit {
   public courseItem: CourseItem;
   public routeParams: any = {};
 
-  constructor(private courseService: CourseService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private courseService: CourseService, private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe((data) => {
       this.routeParams.id = data.id;
     });
-    this.courseItem = this.courseService.getCourseById(this.routeParams.id);
+    this.courseService.getCourseById(this.routeParams.id).subscribe((res: any) => {
+        this.courseItem = {
+          id: res.id,
+          title: res.name,
+          creationDate: new Date (res.date),
+          durationInMin: res.length,
+          description: res.description,
+          topRated: res.isTopRated,
+          author: res.authors[0].firstName
+        };
+      });
   }
 
   save() {

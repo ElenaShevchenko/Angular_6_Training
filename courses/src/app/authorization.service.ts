@@ -1,5 +1,9 @@
 import {EventEmitter, Injectable } from '@angular/core';
 import { User } from './user/user.model';
+import { HttpClient } from '@angular/common/http';
+
+
+const BASE_URL = 'http://localhost:3004/auth/';
 
 @Injectable({
   providedIn: 'root'
@@ -7,40 +11,22 @@ import { User } from './user/user.model';
 
 export class AuthorizationService {
   public isAuthenticated: Boolean = false;
-  private user: User;
-  private userMask: string;
   public onAuthenticated = new EventEmitter(false);
 
-  constructor() {
+  constructor( private http: HttpClient) {
     this.onAuthenticated.emit(false);
-    this.userMask = 'user_';
-    this.user = {
-      id: 123,
-      firstName: 'Ivan',
-      lastName: 'Ivanov',
-    };
   }
 
-  public login () {
+  public login (login, password) {
     this.onAuthenticated.emit(true);
-    localStorage.setItem(this.userMask + this.user.id, this.user.toString());
+    return this.http.post<User>(`${BASE_URL}login`,  {login: login, password: password});
   }
 
   public loginOut () {
-    const lsLen = localStorage.length;
     this.onAuthenticated.emit(false);
-    if (lsLen > 0) {
-      for (let i = 0; i < lsLen; i++) {
-        const key = localStorage.key(i);
-        if (key.indexOf(this.userMask) === 0) {
-          return localStorage.getItem(key);
-        }
-      }
-    }
   }
 
-  public getUserInfo () {
-    return this.user;
+  public getUserInfo() {
+    return this.http.post<User>(`${BASE_URL}userInfo`, {});
   }
-
 }

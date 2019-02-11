@@ -20,7 +20,9 @@ export class BreadcrumbsComponent implements OnInit {
         this.routeParams.id = data.id;
       }
     });
-    this.courseTitle = this.routeParams.id ? this.courseService.getCourseById(this.routeParams.id).title : '';
+    this.courseService.getCourseById(this.routeParams.id).subscribe((res: any) => {
+      this.courseTitle =  res.name;
+    });
   }
 
 
