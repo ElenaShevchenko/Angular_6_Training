@@ -18,6 +18,7 @@ export class AuthorizationService {
   }
 
   public login (login, password) {
+    console.log(login);
     this.onAuthenticated.emit(true);
     return this.http.post<User>(`${BASE_URL}login`,  {login: login, password: password});
   }
