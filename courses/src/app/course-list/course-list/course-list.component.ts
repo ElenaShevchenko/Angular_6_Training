@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { CourseItem } from '../course-item.model';
 import { CourseService } from '../course.service';
 import { FilterPipe } from '../../custom-pipes/filter.pipe';
@@ -40,6 +40,7 @@ export class CourseListComponent implements OnInit {
     });
   }
 
+
   doSearch(searchValue) {
     this.courseService.search(searchValue).subscribe((res: any) => {
       this.courseList = res.map((item) => {
@@ -55,6 +56,7 @@ export class CourseListComponent implements OnInit {
       });
     });
   }
+
 
   removeCourse(item) {
     const modal = prompt('Do you really want to delete this course?', 'Yes');

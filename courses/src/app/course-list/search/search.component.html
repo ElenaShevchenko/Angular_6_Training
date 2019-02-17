@@ -4,9 +4,6 @@
            type="search"
            name="search"
            placeholder="Search"
-           [(ngModel)]="searchValue">
-    <button class="btn btn-success my-2 my-sm-0 submit-btn"
-            (click)="onSearch()"
-            type="submit">Search</button>
+           (keyup)="searchTerm$.next($event.target.value)">
   </form>
 </nav>

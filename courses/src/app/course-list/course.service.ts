@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
 import {CourseItem} from './course-item.model';
 import { HttpClient } from '@angular/common/http';
-
+import { Observable } from 'rxjs';
+import {debounceTime, map, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
 
 const BASE_URL = 'http://localhost:3004/courses';
+const queryUrl  = '?textFragment=';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
   private list: CourseItem[];
+  private searchTerm: any;
 
   constructor( private http: HttpClient ) {
     this.list =  [
@@ -65,11 +68,25 @@ export class CourseService {
     return this.http.get<CourseItem[]>(`${BASE_URL}?start=${start}&count=${count}`);
   }
 
-  public search (textFragment) {
-    return this.http.get<CourseItem[]>(`${BASE_URL}?textFragment=${textFragment}`);
+  public search(terms: Observable<string>) {
+    if (terms) {
+      this.searchTerm = terms;
+    }
+    return this.searchTerm.pipe(filter ((num) => num.length >= 2))
+      .pipe(debounceTime(400))
+      .pipe(distinctUntilChanged())
+      .pipe(switchMap(term => this.searchEntries(term)));
   }
 
-  public  createCourse(item): any {
+  public searchEntries(term) {
+    return this.http.get<CourseItem[]>(BASE_URL + queryUrl + term);
+  }
+
+ /* public search (textFragment) {
+    return this.http.get<CourseItem[]>(`${BASE_URL}?textFragment=${textFragment}`);
+  }*/
+
+  public createCourse(item): any {
      item.id = this.list.length++;
      item.topRated = false;
      return this.list.concat([item]);

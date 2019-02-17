@@ -5,6 +5,7 @@ import { LogoComponent } from './logo/logo.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RouterModule } from '@angular/router';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     LogoComponent,
     FooterComponent,
-    PageNotFoundComponent, ],
+    PageNotFoundComponent,
+    LoadingComponent, ],
   imports: [
     CommonModule,
     RouterModule
@@ -21,6 +23,7 @@ import { RouterModule } from '@angular/router';
     HeaderComponent,
     LogoComponent,
     FooterComponent,
-    PageNotFoundComponent ]
+    PageNotFoundComponent,
+    LoadingComponent]
 })
 export class CoreModule { }

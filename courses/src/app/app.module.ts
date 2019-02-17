@@ -15,10 +15,8 @@ import { AuthGuard } from './auth.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationService } from './authorization.service';
 import { AuthInterceptor } from './auth-interceptor';
+import {LoadingScreenInterceptor} from './loading.interceptor';
 
-const APP_PROVIDERS = [
-  AuthGuard
-];
 
 @NgModule({
   declarations: [
@@ -38,7 +36,9 @@ const APP_PROVIDERS = [
   ],
   providers: [AuthGuard,
               AuthorizationService,
-              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
+              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+              { provide: HTTP_INTERCEPTORS, useClass: LoadingScreenInterceptor, multi: true },
+    ],
   bootstrap: [AppComponent]
 })
 
