@@ -22,8 +22,7 @@ export class AuthorizationComponent implements OnInit {
 
   login() {
    this.authorizationService.login(this.userLogin, this.userPassword).subscribe((res: any) => {
-     const token = JSON.parse(res);
-     localStorage.setItem('fakeToken', JSON.stringify(res.token));
+     localStorage.setItem('fakeToken', res.token);
     });
     this.router.navigate(['/courses']);
   }

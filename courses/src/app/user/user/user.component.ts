@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit, OnDestroy {
-  public user: User;
+  public userName: String = '';
   private usersSubscription: Subscription;
 
   constructor(private authService: AuthorizationService, private router: Router) {
@@ -24,7 +24,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private init(): void {
     this.usersSubscription = this.authService.getUserInfo().subscribe((res: User) => {
-      this.user = res;
+      this.userName = res.name.first + ' ' + res.name.last;
     });
   }
 
