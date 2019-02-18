@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {CourseItem} from './course-item.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {debounceTime, map, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import {debounceTime, map, distinctUntilChanged, switchMap, filter, tap} from 'rxjs/operators';
 
 const BASE_URL = 'http://localhost:3004/courses';
 const queryUrl  = '?textFragment=';
@@ -12,7 +12,7 @@ const queryUrl  = '?textFragment=';
 })
 export class CourseService {
   private list: CourseItem[];
-  private searchTerm: any;
+  private searchTerm: Observable<{}>;
 
   constructor( private http: HttpClient ) {
     this.list =  [
@@ -68,18 +68,18 @@ export class CourseService {
     return this.http.get<CourseItem[]>(`${BASE_URL}?start=${start}&count=${count}`);
   }
 
-  public search(terms: Observable<string>) {
-    if (terms) {
-      this.searchTerm = terms;
-    }
-    return this.searchTerm.pipe(filter ((num) => num.length >= 2))
-      .pipe(debounceTime(400))
-      .pipe(distinctUntilChanged())
-      .pipe(switchMap(term => this.searchEntries(term)));
-  }
-
   public searchEntries(term) {
-    return this.http.get<CourseItem[]>(BASE_URL + queryUrl + term);
+    return this.http.get<CourseItem[]>(BASE_URL + queryUrl + term)
+      .pipe(
+        map((items) => items.map((item) => ({
+          id: item.id,
+          title: item.name,
+          creationDate: new Date (item.date),
+          durationInMin: item.length,
+          description: item.description,
+          topRated: item.isTopRated,
+          author: item.authors.firstName,
+        }))));
   }
 
  /* public search (textFragment) {

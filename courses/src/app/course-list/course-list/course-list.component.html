@@ -5,9 +5,7 @@
 </div>
 <div class="row pt-1 pb-3">
   <div class="col-9">
-    <app-search
-      (searchButton)='doSearch($event)'>
-    </app-search>
+    <app-search (search)="doSearch($event)"> </app-search>
   </div>
   <div class="col-3 text-right">
     <app-add-course></app-add-course>

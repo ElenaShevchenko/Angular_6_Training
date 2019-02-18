@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CourseItem } from '../course-item.model';
 import { CourseService } from '../course.service';
 import { FilterPipe } from '../../custom-pipes/filter.pipe';
+import {take, takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 
 
 @Component({
@@ -9,15 +11,19 @@ import { FilterPipe } from '../../custom-pipes/filter.pipe';
   templateUrl: './course-list.component.html',
   styleUrls: ['./course-list.component.scss']
 })
-export class CourseListComponent implements OnInit {
+export class CourseListComponent implements OnInit, OnDestroy {
   public courseList: CourseItem[] = [];
   public isCoursePageOpened: boolean;
   public start = 0;
   public count = 5;
 
+  private destroy$ = new Subject();
+
   constructor(private courseService: CourseService, private _filterPipe: FilterPipe) { }
 
-
+ngOnDestroy() {
+    this.destroy$.next();
+}
 
   ngOnInit() {
     this.getCourse();
@@ -42,18 +48,11 @@ export class CourseListComponent implements OnInit {
 
 
   doSearch(searchValue) {
-    this.courseService.search(searchValue).subscribe((res: any) => {
-      this.courseList = res.map((item) => {
-        return {
-          id: item.id,
-          title: item.name,
-          creationDate: new Date (item.date),
-          durationInMin: item.length,
-          description: item.description,
-          topRated: item.isTopRated,
-          author: item.authors.firstName
-        };
-      });
+    this.courseService
+      .searchEntries(searchValue)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+      this.courseList = res;
     });
   }
 

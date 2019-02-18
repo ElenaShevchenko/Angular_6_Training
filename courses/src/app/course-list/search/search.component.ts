@@ -1,21 +1,31 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, OnDestroy} from '@angular/core';
 import { Subject } from 'rxjs';
-import {CourseService} from '../course.service';
+import {debounceTime, distinctUntilChanged, filter, take, takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
-  providers: [ CourseService ]
 })
-export class SearchComponent {
-  @Output() searchButton = new EventEmitter<Subject<string>>();
-  results: Object;
+export class SearchComponent implements OnDestroy{
+  @Output() search = new EventEmitter<string>();
   searchTerm$ = new Subject<string>();
 
-  constructor(private service: CourseService) {
-    this.service.search(this.searchTerm$).subscribe(results => {
-    });
+  destroy$ = new Subject();
+
+  constructor() {
+    this.searchTerm$.pipe(
+      debounceTime(400),
+      filter ((term) => term.length > 2),
+      distinctUntilChanged(),
+      tap((term) => this.search.emit(term)),
+      takeUntil(this.destroy$),
+    ).subscribe();
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
+
 }
 
