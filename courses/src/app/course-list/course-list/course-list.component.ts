@@ -1,10 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { CourseItem } from '../course-item.model';
 import { CourseService } from '../course.service';
-import { FilterPipe } from '../../custom-pipes/filter.pipe';
-import {take, takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs';
-
 
 @Component({
   selector: 'app-course-list',
@@ -19,56 +18,44 @@ export class CourseListComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private courseService: CourseService, private _filterPipe: FilterPipe) { }
+  constructor(
+    private courseService: CourseService,
+  ) { }
 
-ngOnDestroy() {
+  ngOnDestroy() {
     this.destroy$.next();
-}
+  }
 
   ngOnInit() {
     this.getCourse();
     this.isCoursePageOpened = false;
   }
 
-  private getCourse(): void {
-    this.courseService.getCourseList(this.start, this.count).subscribe((res: any) => {
-      this.courseList = res.map((item) => {
-        return {
-          id: item.id,
-          title: item.name,
-          creationDate: new Date (item.date),
-          durationInMin: item.length,
-          description: item.description,
-          topRated: item.isTopRated,
-          author: item.authors.firstName
-        };
-      });
-    });
+  private getCourse() {
+    this.courseService
+      .getCourseList(this.start, this.count)
+      .subscribe((res) => this.courseList = res);
   }
-
 
   doSearch(searchValue) {
     this.courseService
       .searchEntries(searchValue)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-      this.courseList = res;
-    });
+      .subscribe((res) => this.courseList = res);
   }
-
 
   removeCourse(item) {
     const modal = prompt('Do you really want to delete this course?', 'Yes');
     if (modal) {
-      this.courseService.removeCourse(item.id).subscribe((res: any) => {
-        this.getCourse();
-      });
+      this.courseService
+        .removeCourse(item.id)
+        .subscribe(() => this.getCourse());
     }
   }
 
-  loadMore () {
-   this.start = this.count;
-   this.count = this.count + 5;
+  loadMore() {
+    this.start = this.count;
+    this.count = this.count + 5;
     this.getCourse();
   }
 

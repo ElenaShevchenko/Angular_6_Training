@@ -10,21 +10,20 @@ import { AuthGuard } from '../../auth.guard';
   styleUrls: ['./authorization.component.css'],
 })
 
-export class AuthorizationComponent implements OnInit {
-
-  constructor(private authorizationService: AuthorizationService, private router: Router, private guard: AuthGuard) {
-  }
+export class AuthorizationComponent {
   private userLogin: string;
   private userPassword: string;
 
-  ngOnInit() {
+  constructor(
+    private authorizationService: AuthorizationService,
+    private router: Router,
+  ) {
   }
 
   login() {
-   this.authorizationService.login(this.userLogin, this.userPassword).subscribe((res: any) => {
-     localStorage.setItem('fakeToken', res.token);
-    });
-    this.router.navigate(['/courses']);
+    this.authorizationService
+      .login(this.userLogin, this.userPassword)
+      .subscribe(() => this.router.navigate(['/courses']));
   }
 
 }

@@ -1,21 +1,21 @@
-import {Injectable} from '@angular/core';
-import {CourseItem} from './course-item.model';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {debounceTime, map, distinctUntilChanged, switchMap, filter, tap} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+
+import { CourseDb, CourseItem } from './course-item.model';
 
 const BASE_URL = 'http://localhost:3004/courses';
-const queryUrl  = '?textFragment=';
+const queryUrl = '?textFragment=';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
   private list: CourseItem[];
-  private searchTerm: Observable<{}>;
 
-  constructor( private http: HttpClient ) {
-    this.list =  [
+  constructor(private http: HttpClient) {
+    this.list = [
       {
         id: 1,
         title: 'Course',
@@ -64,47 +64,53 @@ export class CourseService {
     ];
   }
 
-  public  getCourseList(start, count) {
-    return this.http.get<CourseItem[]>(`${BASE_URL}?start=${start}&count=${count}`);
-  }
-
-  public searchEntries(term) {
-    return this.http.get<CourseItem[]>(BASE_URL + queryUrl + term)
+  public getCourseList(start, count): Observable<CourseItem[]> {
+    return this.http.get<CourseDb[]>(`${BASE_URL}?start=${start}&count=${count}`)
       .pipe(
-        map((items) => items.map((item) => ({
-          id: item.id,
-          title: item.name,
-          creationDate: new Date (item.date),
-          durationInMin: item.length,
-          description: item.description,
-          topRated: item.isTopRated,
-          author: item.authors.firstName,
-        }))));
+        map((items) => this.convertToCourseItems(items)),
+      );
   }
 
- /* public search (textFragment) {
-    return this.http.get<CourseItem[]>(`${BASE_URL}?textFragment=${textFragment}`);
-  }*/
+  public searchEntries(term): Observable<CourseItem[]> {
+    return this.http.get<CourseDb[]>(BASE_URL + queryUrl + term)
+      .pipe(
+        map((items) => this.convertToCourseItems(items)),
+      );
+  }
+
+  private convertToCourseItems(courses: CourseDb[]) {
+    return courses.map((item) => ({
+      id: item.id,
+      title: item.name,
+      creationDate: new Date(item.date),
+      durationInMin: item.length,
+      description: item.description,
+      topRated: item.isTopRated,
+      author: item.authors[0].firstName,
+    }));
+  }
 
   public createCourse(item): any {
-     item.id = this.list.length++;
-     item.topRated = false;
-     return this.list.concat([item]);
+    item.id = this.list.length++;
+    item.topRated = false;
+    return this.list.concat([item]);
   }
 
-  public  getCourseById(id) {
+  public getCourseById(id) {
     return this.http.get<CourseItem>(`${BASE_URL}/${id}`);
   }
 
-  public  updateCourse(item): CourseItem[] {
-     return this.list.map ((elem) => {
+  public updateCourse(item): CourseItem[] {
+    return this.list.map((elem) => {
       if (elem.id === item.id) {
         return item;
-      } else  {
-        return elem; }
-      });
+      } else {
+        return elem;
+      }
+    });
   }
-  public  removeCourse(id): any {
+
+  public removeCourse(id): any {
     return this.http.delete<CourseItem>(`${BASE_URL}/${id}`);
   }
 }

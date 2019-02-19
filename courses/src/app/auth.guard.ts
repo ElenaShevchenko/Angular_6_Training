@@ -6,15 +6,17 @@ import { AuthorizationService } from './authorization.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  public isAuthenticated: boolean;
-  public routeUrl: any = {};
+  public isAuthenticated = false;
 
-  constructor(private authService: AuthorizationService) {
-    this.authService.onAuthenticated.subscribe((val) => this.isAuthenticated = val);
+  constructor(
+    private authService: AuthorizationService,
+  ) {
+    this.authService.onAuthenticated
+      .subscribe((val) => this.isAuthenticated = val);
   }
 
   canActivate(): boolean {
-    return this.isAuthenticated ? this.isAuthenticated : false;
+    return this.isAuthenticated;
   }
 }
 

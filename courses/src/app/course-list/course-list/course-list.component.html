@@ -20,7 +20,7 @@
      *ngIf="courseList.length && !isCoursePageOpened">
     <app-course-item *ngFor="let item of courseList | orderBy: courseList"
                      [courseItem] = "item"
-                     (clickButton)='removeCourse($event)'
+                     (onDelete)='removeCourse($event)'
                      class="mt-1 mb-1">
     </app-course-item>
     <button type="button"

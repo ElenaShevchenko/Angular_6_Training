@@ -1,5 +1,6 @@
-import {Component, Input, Output, OnInit, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
-import {CourseItem} from '../course-item.model';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { CourseItem } from '../course-item.model';
 
 @Component({
   selector: 'app-course-item',
@@ -7,16 +8,11 @@ import {CourseItem} from '../course-item.model';
   styleUrls: ['./course-item.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseItemComponent implements OnInit {
+export class CourseItemComponent {
   @Input() public courseItem: CourseItem;
-  @Output() clickButton = new EventEmitter<CourseItem>();
+  @Output() public onDelete = new EventEmitter<CourseItem>();
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  click () {
-    this.clickButton.emit(this.courseItem);
+  public delete() {
+    this.onDelete.emit(this.courseItem);
   }
 }
