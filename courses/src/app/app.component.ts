@@ -1,20 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { AuthorizationService } from './authorization.service';
 import { Router } from '@angular/router';
 import { User } from './user/user.model';
-import { Subscription } from 'rxjs';
-
+import { Subscription, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'courses';
+  public title = 'courses';
   public user: User;
-  public isAuthenticated: Boolean = false;
+  public isAuthenticated$ = new BehaviorSubject(false);
   private usersSubscription: Subscription;
 
   constructor(
@@ -23,10 +21,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.authService.onAuthenticated
+    this.authService.isAuthenticated$
       .subscribe((val) => {
-        this.isAuthenticated = val;
-        if (this.isAuthenticated) {
+        this.isAuthenticated$.next(val);
+        if (val) {
           this.getUserInfo();
         }
       });

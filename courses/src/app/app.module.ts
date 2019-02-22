@@ -15,7 +15,7 @@ import { AuthGuard } from './auth.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationService } from './authorization.service';
 import { AuthInterceptor } from './auth-interceptor';
-import {LoadingScreenInterceptor} from './loading.interceptor';
+import { LoadingScreenInterceptor } from './loading.interceptor';
 
 
 @NgModule({
@@ -31,14 +31,15 @@ import {LoadingScreenInterceptor} from './loading.interceptor';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    RouterModule.forRoot(appRoutes, {useHash: true}),
+    RouterModule.forRoot(appRoutes, { useHash: true }),
     HttpClientModule
   ],
-  providers: [AuthGuard,
-              AuthorizationService,
-              { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-              { provide: HTTP_INTERCEPTORS, useClass: LoadingScreenInterceptor, multi: true },
-    ],
+  providers: [
+    AuthGuard,
+    AuthorizationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingScreenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 

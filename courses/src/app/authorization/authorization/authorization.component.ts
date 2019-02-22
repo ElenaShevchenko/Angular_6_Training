@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthorizationService } from '../../authorization.service';
 import { Router } from '@angular/router';
-import { AuthGuard } from '../../auth.guard';
 
+import { AuthorizationService } from '../../authorization.service';
 
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.css'],
 })
-
-export class AuthorizationComponent {
-  private userLogin: string;
-  private userPassword: string;
+export class AuthorizationComponent implements OnInit {
+  public userLogin: string;
+  public userPassword: string;
 
   constructor(
     private authorizationService: AuthorizationService,
@@ -20,10 +18,15 @@ export class AuthorizationComponent {
   ) {
   }
 
+  ngOnInit() {
+    if (this.authorizationService.isAuthenticated) {
+      this.authorizationService.loginOut();
+    }
+  }
+
   login() {
     this.authorizationService
       .login(this.userLogin, this.userPassword)
       .subscribe(() => this.router.navigate(['/courses']));
   }
-
 }

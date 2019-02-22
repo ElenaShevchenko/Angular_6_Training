@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
-import { tap, catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { User } from './user/user.model';
+import { BehaviorSubject } from 'rxjs';
 
 const BASE_URL = 'http://localhost:3004/auth/';
 
@@ -11,12 +12,11 @@ const BASE_URL = 'http://localhost:3004/auth/';
 })
 
 export class AuthorizationService {
-  public onAuthenticated = new EventEmitter(false);
+  public isAuthenticated$ = new BehaviorSubject(false);
 
   constructor(
     private http: HttpClient,
   ) {
-    this.onAuthenticated.emit(false);
   }
 
   public login(login, password) {
@@ -25,13 +25,14 @@ export class AuthorizationService {
       .pipe(
         tap((res) => {
           localStorage.setItem('fakeToken', res.token);
-          this.onAuthenticated.emit(true);
+          this.isAuthenticated$.next(true);
         }),
       );
   }
 
   public loginOut() {
-    this.onAuthenticated.emit(false);
+    this.isAuthenticated$.next(false);
+    localStorage.removeItem('fakeToken');
   }
 
   public getUserInfo() {

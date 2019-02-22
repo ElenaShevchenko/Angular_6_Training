@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './creation-date.component.html',
   styleUrls: ['./creation-date.component.css']
 })
-export class CreationDateComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class CreationDateComponent {
+  public creationDate: Date;
 }

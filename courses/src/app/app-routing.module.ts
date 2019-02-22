@@ -7,23 +7,31 @@ import { AuthorizationComponent } from './authorization/authorization/authorizat
 import { AuthGuard } from './auth.guard';
 
 export const appRoutes: Routes = [
-  {path: '',
+  {
+    path: 'login',
+    component: AuthorizationComponent,
+  },
+  {
+    path: 'courses',
+    component: CourseListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'courses/new',
+    component: AddCoursePageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'courses/:id',
+    component: EditCourseComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-    },
-  {path: 'login',
-   component: AuthorizationComponent,
   },
-  {path: 'courses',
-   component: CourseListComponent,
-   canActivate: [AuthGuard]},
-  {path: 'courses/new',
-   component: AddCoursePageComponent,
-   canActivate: [AuthGuard]},
-  {path: 'courses/:id',
-   component: EditCourseComponent,
-   canActivate: [AuthGuard]},
-  {path: '**', component: PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 

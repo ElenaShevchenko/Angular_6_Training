@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './duration.component.html',
   styleUrls: ['./duration.component.css']
 })
-export class DurationComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class DurationComponent {
+  public durationInMin: string;
 }

@@ -13,7 +13,6 @@ import { CourseService } from '../course.service';
 export class CourseListComponent implements OnInit, OnDestroy {
   public courseList: CourseItem[] = [];
   public isCoursePageOpened: boolean;
-  public start = 0;
   public count = 5;
 
   private destroy$ = new Subject();
@@ -33,7 +32,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
 
   private getCourse() {
     this.courseService
-      .getCourseList(this.start, this.count)
+      .getCourseList(0, this.count)
       .subscribe((res) => this.courseList = res);
   }
 
@@ -54,7 +53,6 @@ export class CourseListComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    this.start = this.count;
     this.count = this.count + 5;
     this.getCourse();
   }
