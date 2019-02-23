@@ -8,7 +8,8 @@ export interface CourseItem {
   author: string;
 }
 
-export interface CourseDb {
+
+  export interface CourseDb {
   id: number;
   name: string;
   description: string;

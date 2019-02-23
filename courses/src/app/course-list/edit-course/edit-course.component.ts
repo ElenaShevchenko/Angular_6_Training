@@ -11,7 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 
 export class EditCourseComponent implements OnInit {
-  public courseItem: CourseItem;
+  public courseItem: CourseItem = {
+    id: 1,
+    title: '',
+    creationDate:  new Date(),
+    durationInMin: 1,
+    description: '',
+    topRated: false,
+    author: ''
+  };
   public routeParams: any = {};
 
   constructor(private courseService: CourseService, private route: ActivatedRoute, private router: Router) {
@@ -35,7 +43,9 @@ export class EditCourseComponent implements OnInit {
   }
 
   save() {
-    this.courseService.updateCourse(this.courseItem);
+    this.courseService
+      .updateCourse(this.courseItem)
+      .subscribe();
     this.router.navigate(['/courses']);
   }
 

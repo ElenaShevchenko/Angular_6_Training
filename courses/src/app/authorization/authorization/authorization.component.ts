@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { AuthorizationService } from '../../authorization.service';
 
 @Component({
@@ -19,7 +18,7 @@ export class AuthorizationComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authorizationService.isAuthenticated) {
+    if (this.authorizationService.isAuthenticated$) {
       this.authorizationService.loginOut();
     }
   }

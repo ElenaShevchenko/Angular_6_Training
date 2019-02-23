@@ -1,13 +1,13 @@
-import {Component, Output, EventEmitter, OnDestroy} from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, take, takeUntil, tap} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.css'],
 })
-export class SearchComponent implements OnDestroy{
+export class SearchComponent implements OnDestroy {
   @Output() search = new EventEmitter<string>();
   searchTerm$ = new Subject<string>();
 
