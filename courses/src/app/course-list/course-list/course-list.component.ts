@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CourseItem } from '../course-item.model';
 import { CourseService } from '../course.service';
+import { AppStore } from '../../app-store';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-course-list',
@@ -10,7 +12,13 @@ import { CourseService } from '../course.service';
   styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent implements OnInit, OnDestroy {
+
   public courseList: CourseItem[] = [];
+  public courseList$: any = this.store$.pipe(select
+  ((state) => {
+    console.log(state);
+    return state.courseList;
+  }));
   public isCoursePageOpened: boolean;
   public count = 5;
 
@@ -18,21 +26,24 @@ export class CourseListComponent implements OnInit, OnDestroy {
 
   constructor(
     private courseService: CourseService,
-  ) { }
+    private store$: Store<AppStore>
+  ) {
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
   }
 
   ngOnInit() {
-    this.getCourse();
+    this.store$.dispatch({type: 'GET_COURSE'});
+    /*this.getCourse();*/
     this.isCoursePageOpened = false;
   }
 
   private getCourse() {
-    this.courseService
+    /*this.courseService
       .getCourseList(0, this.count)
-      .subscribe((res) => this.courseList = res);
+      .subscribe((res) => this.courseList = res);*/
   }
 
   doSearch(searchValue) {

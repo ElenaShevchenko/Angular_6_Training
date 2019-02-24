@@ -16,6 +16,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationService } from './authorization.service';
 import { AuthInterceptor } from './auth-interceptor';
 import { LoadingScreenInterceptor } from './loading.interceptor';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { CourseEffects } from './course-list/course.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { appReducer } from './redusers';
+import { environment } from '../environments/environment';
+
+
 
 
 @NgModule({
@@ -32,7 +40,13 @@ import { LoadingScreenInterceptor } from './loading.interceptor';
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     RouterModule.forRoot(appRoutes, { useHash: true }),
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(appReducer),
+    StoreDevtoolsModule.instrument({
+      name: 'NgRx Book Store DevTools',
+      logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([CourseEffects]),
   ],
   providers: [
     AuthGuard,

@@ -16,6 +16,10 @@ import { AuthorComponent } from './author/author.component';
 import { RouterModule } from '@angular/router';
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
+import { EffectsModule } from '@ngrx/effects';
+import { CourseEffects } from './course.effects';
+import {StoreModule} from '@ngrx/store';
+import { appReducer } from '../redusers';
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forFeature('courseList', appReducer ),
+    EffectsModule.forFeature([CourseEffects])
   ],
   exports: [
     CourseListComponent,
