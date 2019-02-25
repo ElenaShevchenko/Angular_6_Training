@@ -1,19 +1,32 @@
-const initialState = {
+const appInitialState = {
   isAuthenticated: false,
-  courseList: []
 };
 
 export function appReducer(
-  state = initialState,
+  state = appInitialState,
   action
 ) {
   switch (action.type) {
-    case 'GET_COURSE Loaded Success': {
-      console.log(action);
-      return action.payload;
-    }
     default: {
       return state;
     }
   }
+}
+
+const courseListInitialState = {
+  items: [],
+  currentLength: 5,
+};
+
+export function courseListReducer(
+  state = courseListInitialState,
+  action
+) {
+  switch (action.type) {
+    case 'GET_COURSE Loaded Success': {
+      state.items = action.payload;
+      break;
+    }
+  }
+  return state;
 }

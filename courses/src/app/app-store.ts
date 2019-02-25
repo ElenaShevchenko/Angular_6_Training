@@ -1,7 +1,6 @@
-import { BehaviorSubject } from 'rxjs';
 import { CourseItem } from './course-list/course-item.model';
 
 export interface AppStore {
-  isAuthenticated: BehaviorSubject<boolean> ;
-  courseList: [CourseItem[]];
+  isAuthenticated: boolean;
+  courseList: { items: CourseItem[], currentLength: number };
 }

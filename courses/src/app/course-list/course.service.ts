@@ -31,9 +31,7 @@ export class CourseService {
   }
 
   public createCourse(item) {
-    const currentItem = this.convertToDBItemsCreate(item);
-    return this.http.post<CourseDb>(`${BASE_URL}`, currentItem)
-      .pipe();
+    return this.http.post<CourseDb>(`${BASE_URL}`, this.convertToDBItemsCreate(item));
   }
 
   public getCourseById(id) {
@@ -41,9 +39,7 @@ export class CourseService {
   }
 
   public updateCourse(item) {
-    const currentItem = this.convertToDBItemsUpdate(item);
-    return this.http.put<CourseItem>(`${BASE_URL}/${item.id}`, currentItem)
-      .pipe();
+    return this.http.put<CourseItem>(`${BASE_URL}/${item.id}`, this.convertToDBItemsUpdate(item));
   }
 
   public removeCourse(id): any {

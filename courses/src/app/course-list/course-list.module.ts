@@ -1,25 +1,26 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CourseListComponent } from './course-list/course-list.component';
-import { CourseItemComponent } from './course-item/course-item.component';
-import { HighlightItemDirective } from './highlightItem.directive';
-import { OrderByPipe } from '../custom-pipes/order-by.pipe';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
 import { DurationPipe } from '../custom-pipes/duration.pipe';
 import { FilterPipe } from '../custom-pipes/filter.pipe';
-import { SearchComponent } from './search/search.component';
-import { AddCourseComponent } from './add-course/add-course.component';
-import { FormsModule } from '@angular/forms';
+import { OrderByPipe } from '../custom-pipes/order-by.pipe';
+import { courseListReducer } from '../redusers';
 import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
+import { AddCourseComponent } from './add-course/add-course.component';
+import { AuthorComponent } from './author/author.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { CourseItemComponent } from './course-item/course-item.component';
+import { CourseListComponent } from './course-list/course-list.component';
+import { CourseEffects } from './course.effects';
 import { CreationDateComponent } from './creation-date/creation-date.component';
 import { DurationComponent } from './duration/duration.component';
-import { AuthorComponent } from './author/author.component';
-import { RouterModule } from '@angular/router';
 import { EditCourseComponent } from './edit-course/edit-course.component';
-import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
-import { EffectsModule } from '@ngrx/effects';
-import { CourseEffects } from './course.effects';
-import {StoreModule} from '@ngrx/store';
-import { appReducer } from '../redusers';
+import { HighlightItemDirective } from './highlightItem.directive';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { appReducer } from '../redusers';
     CommonModule,
     FormsModule,
     RouterModule,
-    StoreModule.forFeature('courseList', appReducer ),
+    StoreModule.forFeature('courseList', courseListReducer),
     EffectsModule.forFeature([CourseEffects])
   ],
   exports: [

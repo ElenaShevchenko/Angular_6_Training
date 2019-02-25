@@ -23,9 +23,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './redusers';
 import { environment } from '../environments/environment';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent

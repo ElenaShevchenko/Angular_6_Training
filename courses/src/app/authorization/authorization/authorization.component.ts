@@ -18,7 +18,7 @@ export class AuthorizationComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authorizationService.isAuthenticated$) {
+    if (this.authorizationService.isAuthenticated$.getValue()) {
       this.authorizationService.loginOut();
     }
   }

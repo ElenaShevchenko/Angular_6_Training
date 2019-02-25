@@ -1,29 +1,33 @@
-<div class="row pt-1 pb-3">
-  <div class="col">
-    <app-breadcrumbs></app-breadcrumbs>
+<ng-container *ngIf="(courseList$ | async) as courseList">
+  <div class="row pt-1 pb-3">
+    <div class="col">
+      <app-breadcrumbs></app-breadcrumbs>
+    </div>
   </div>
-</div>
-<div class="row pt-1 pb-3">
-  <div class="col-9">
-    <app-search (search)="doSearch($event)"> </app-search>
+  <div class="row pt-1 pb-3">
+    <div class="col-9">
+      <app-search (search)="doSearch($event)"> </app-search>
+    </div>
+    <div class="col-3 text-right">
+      <app-add-course></app-add-course>
+    </div>
   </div>
-  <div class="col-3 text-right">
-    <app-add-course></app-add-course>
+  <button type="button"
+          *ngIf="!courseList.length && !isCoursePageOpened"
+          class="btn btn-success btn-block mt-1 mb-1 load-more-button">
+    NO DATA, FEEL FREE TO ADD NEW COURSE
+  </button>
+  <div class="list-group course-list"
+      *ngIf="courseList.length && !isCoursePageOpened">
+      <app-course-item *ngFor="let item of courseList"
+                       [courseItem] = "item"
+                       (onDelete)='removeCourse($event)'
+                       class="mt-1 mb-1">
+      </app-course-item>
+      <button type="button"
+              class="btn btn-success btn-block mt-3 mb-5 load-more-button"
+              (click)="loadMore()">Load More...</button>
   </div>
-</div>
-<button type="button"
-        *ngIf="!courseList$.length && !isCoursePageOpened"
-        class="btn btn-success btn-block mt-1 mb-1 load-more-button">
-  NO DATA, FEEL FREE TO ADD NEW COURSE
-</button>
-<div class="list-group course-list"
-     *ngIf="courseList$.length && !isCoursePageOpened">
-    <app-course-item *ngFor="let item of (courseList$ | async) | orderBy: courseList$"
-                     [courseItem] = "item"
-                     (onDelete)='removeCourse($event)'
-                     class="mt-1 mb-1">
-    </app-course-item>
-    <button type="button"
-            class="btn btn-success btn-block mt-3 mb-5 load-more-button"
-            (click)="loadMore()">Load More...</button>
-</div>
+</ng-container>
+
+
