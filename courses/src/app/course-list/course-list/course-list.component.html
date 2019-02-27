@@ -13,12 +13,12 @@
     </div>
   </div>
   <button type="button"
-          *ngIf="!courseList.length && !isCoursePageOpened"
+          *ngIf="!courseList.length"
           class="btn btn-success btn-block mt-1 mb-1 load-more-button">
     NO DATA, FEEL FREE TO ADD NEW COURSE
   </button>
   <div class="list-group course-list"
-      *ngIf="courseList.length && !isCoursePageOpened">
+      *ngIf="courseList.length">
       <app-course-item *ngFor="let item of courseList"
                        [courseItem] = "item"
                        (onDelete)='removeCourse($event)'

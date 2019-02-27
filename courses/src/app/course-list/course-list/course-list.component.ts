@@ -14,12 +14,9 @@ import { CourseService } from '../course.service';
 })
 export class CourseListComponent implements OnInit, OnDestroy {
 
-  public courseList: CourseItem[] = [];
   public courseList$: Observable<CourseItem[]> = this.store$.pipe(select((state) => state.courseList.items));
 
-  public isCoursePageOpened: boolean;
   public count = 5;
-
   private destroy$ = new Subject();
 
   constructor(
@@ -34,35 +31,25 @@ export class CourseListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.store$.dispatch({ type: 'GET_COURSE' });
-    /*this.getCourse();*/
-    this.isCoursePageOpened = false;
   }
 
-  private getCourse() {
-    /*this.courseServices
-      .getCourseList(0, this.count)
-      .subscribe((res) => this.courseList = res);*/
-  }
 
   doSearch(searchValue) {
     this.courseService
       .searchEntries(searchValue)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => this.courseList = res);
+      .pipe(takeUntil(this.destroy$));
   }
 
   removeCourse(item) {
     const modal = prompt('Do you really want to delete this course?', 'Yes');
     if (modal) {
-      this.courseService
-        .removeCourse(item.id)
-        .subscribe(() => this.getCourse());
+      this.store$.dispatch({ type: 'REMOVE_COURSE', courseId: item.id });
     }
   }
 
   loadMore() {
     this.count = this.count + 5;
-    this.getCourse();
+    this.store$.dispatch({ type: 'LOAD_MORE' });
   }
 
 }
