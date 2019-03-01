@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AppStore } from '../../app-store';
 import { CourseItem } from '../course-item.model';
+import { RemoveCourse } from '../course.effects';
 import { CourseService } from '../course.service';
 
 @Component({
@@ -43,7 +44,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
   removeCourse(item) {
     const modal = prompt('Do you really want to delete this course?', 'Yes');
     if (modal) {
-      this.store$.dispatch({ type: 'REMOVE_COURSE', courseId: item.id });
+      this.store$.dispatch(new RemoveCourse({ courseId: item.id }));
     }
   }
 
