@@ -14,21 +14,12 @@ import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'
   styleUrls: ['./add-course-page.component.css']
 })
 export class AddCoursePageComponent {
-  public newCourseItem: NewCourseModel;
 
   constructor(
     private courseService: CourseService,
     private router: Router,
     private store$: Store<AppStore>,
     private formBuilder: FormBuilder ) {
-
-    this.newCourseItem = {
-      title: 'title',
-      creationDate:  new Date(2018, 4, 5),
-      durationInMin: 121,
-      description: 'Description',
-      author: 'Author'
-    };
 
     this.createForm();
   }
@@ -37,13 +28,17 @@ export class AddCoursePageComponent {
     title: new FormControl(),
     description: new FormControl(),
     creationDate: new FormControl(),
+    duration: new FormControl(),
+    author: new FormControl()
   });
 
   createForm() {
     this.createCourseForm = this.formBuilder.group({
       title: ['' , [Validators.required, Validators.maxLength(50)]],
       description: ['',  [Validators.required, Validators.maxLength(500)]],
-      creationDate: ['',  [Validators.required]]
+      creationDate: [''],
+      duration: [''],
+      author: ['']
     });
   }
 

@@ -20,9 +20,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { CourseEffects } from './course-list/course.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { appReducer } from './redusers';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
+import {AuthEffects} from './authorization/auth.effects';
+import { appReducer } from './authorization/auth.reducer';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,7 @@ import { ReactiveFormsModule } from '@angular/forms';
       name: 'NgRx Book Store DevTools',
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([CourseEffects]),
+    EffectsModule.forRoot([CourseEffects, AuthEffects]),
   ],
   providers: [
     AuthGuard,

@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './auth.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth.effects';
 
 
 @NgModule({
   declarations: [AuthorizationComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    StoreModule.forFeature('isAuthenticated', appReducer),
+    EffectsModule.forFeature([AuthEffects]),
+    ReactiveFormsModule,
   ],
   exports: [
     AuthorizationComponent

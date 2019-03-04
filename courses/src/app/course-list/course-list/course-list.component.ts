@@ -1,12 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
 import { AppStore } from '../../app-store';
 import { CourseItem } from '../course-item.model';
-import { RemoveCourse } from '../course.effects';
-import { CourseService } from '../course.service';
+import { RemoveCourse, Search, GetCourse, LoadMore } from '../course.effects';
 
 @Component({
   selector: 'app-course-list',
@@ -17,11 +14,9 @@ export class CourseListComponent implements OnInit, OnDestroy {
 
   public courseList$: Observable<CourseItem[]> = this.store$.pipe(select((state) => state.courseList.items));
 
-  public count = 5;
   private destroy$ = new Subject();
 
   constructor(
-    private courseService: CourseService,
     private store$: Store<AppStore>
   ) {
   }
@@ -31,14 +26,12 @@ export class CourseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store$.dispatch({ type: 'GET_COURSE' });
+    this.store$.dispatch(new GetCourse());
   }
 
 
   doSearch(searchValue) {
-    this.courseService
-      .searchEntries(searchValue)
-      .pipe(takeUntil(this.destroy$));
+    this.store$.dispatch(new Search({ searchValue: searchValue}));
   }
 
   removeCourse(item) {
@@ -49,8 +42,7 @@ export class CourseListComponent implements OnInit, OnDestroy {
   }
 
   loadMore() {
-    this.count = this.count + 5;
-    this.store$.dispatch({ type: 'LOAD_MORE' });
+    this.store$.dispatch(new LoadMore());
   }
 
 }

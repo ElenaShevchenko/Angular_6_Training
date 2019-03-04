@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { DurationPipe } from '../custom-pipes/duration.pipe';
 import { FilterPipe } from '../custom-pipes/filter.pipe';
 import { OrderByPipe } from '../custom-pipes/order-by.pipe';
-import { courseListReducer } from '../redusers';
+import { courseListReducer } from './course.reducers';
 import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
 import { AddCourseComponent } from './add-course/add-course.component';
 import { AuthorComponent } from './author/author.component';

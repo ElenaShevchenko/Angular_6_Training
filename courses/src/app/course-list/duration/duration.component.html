@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-group" [formGroup]="durationForm">
     <div class="row">
       <div class="col-4">
 
@@ -6,8 +6,7 @@
           <input type="text"
                  class="form-control"
                  id="duration" placeholder="28"
-                 name="duration"
-                 [(ngModel)]="durationInMin">
+                 formControlName="durationInMin">
 
       </div>
       <div class="col-8">

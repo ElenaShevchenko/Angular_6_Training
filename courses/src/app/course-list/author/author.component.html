@@ -1,9 +1,10 @@
-<div class="form-group">
-  <label for="author" class="pb-1">Author</label>
-  <input type="text"
-         class="form-control"
-         id="author"
-         placeholder="Author"
-         name="author"
-         [(ngModel)]="author">
+<div class="form-group" [formGroup]="authorsForm">
+  <label for="authors" class="pb-1">Author</label>
+  <select multiple id="authors"
+          name="authors"
+          [formControl]="authorControl">
+    <option *ngFor="let author of authors$ | async" [ngValue]="author">
+      {{ author.name }}
+    </option>
+  </select>
 </div>

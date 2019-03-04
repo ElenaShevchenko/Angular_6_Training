@@ -1,9 +1,9 @@
 <nav class="">
-  <form class="form-inline">
+  <form class="form-inline" [formGroup]="searchForm">
     <input class="form-control mr-sm-2"
            type="search"
-           name="search"
+           formControlName="searchValue"
            placeholder="Search"
-           (keyup)="searchTerm$.next($event.target.value)">
+           (keyup)="searchTerm$.next(searchForm.get('searchValue').value)">
   </form>
 </nav>

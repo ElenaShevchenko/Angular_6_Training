@@ -16,8 +16,7 @@ export interface NewCourseItem {
   author: string;
 }
 
-
-  export interface CourseDb {
+export interface CourseDb {
   id: number;
   name: string;
   description: string;
@@ -31,4 +30,9 @@ export interface AuthorDb {
   id: string;
   firstName: string;
   lastName: string;
+}
+
+export interface Author {
+  id: string;
+  name: string;
 }

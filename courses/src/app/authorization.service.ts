@@ -4,6 +4,7 @@ import { tap } from 'rxjs/operators';
 
 import { User } from './user/user.model';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 const BASE_URL = 'http://localhost:3004/auth/';
 
@@ -16,6 +17,7 @@ export class AuthorizationService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
   ) {
   }
 
@@ -26,6 +28,7 @@ export class AuthorizationService {
         tap((res) => {
           localStorage.setItem('fakeToken', res.token);
           this.isAuthenticated$.next(true);
+          this.router.navigate(['/courses']);
         }),
       );
   }

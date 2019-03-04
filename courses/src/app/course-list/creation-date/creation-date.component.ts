@@ -10,8 +10,6 @@ import {
   AbstractControl,
   ValidationErrors  } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-creation-date',
   templateUrl: './creation-date.component.html',
@@ -32,7 +30,7 @@ import {
 export class CreationDateComponent implements ControlValueAccessor, Validator  {
 
   public creationDateForm: FormGroup = new FormGroup(    {
-      creationDate: new FormControl('', [ Validators.required ])});
+      date: new FormControl('', [ Validators.required ])});
 
   public onTouched: () => void = () => {};
 

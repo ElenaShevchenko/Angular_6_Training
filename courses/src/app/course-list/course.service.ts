@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CourseDb, CourseItem } from './course-item.model';
+import {AuthorDb, CourseDb, CourseItem, Author} from './course-item.model';
 
 const BASE_URL = 'http://localhost:3004/courses';
 const queryUrl = '?textFragment=';
@@ -46,6 +46,10 @@ export class CourseService {
     return this.http.delete<CourseItem>(`${BASE_URL}/${id}`);
   }
 
+  public getAuthors() {
+    return this.http.get<Author>(`http:/localhost:3004/authors`);
+  }
+
   private convertToCourseItems(courses: CourseDb[]) {
     return courses.map((item) => ({
       id: item.id,
@@ -59,7 +63,6 @@ export class CourseService {
   }
 
   private convertToDBItemsCreate(item: CourseItem) {
-    console.log(item);
     return {
       id: Math.random(),
       name: item.title,

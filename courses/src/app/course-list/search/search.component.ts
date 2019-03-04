@@ -1,6 +1,9 @@
 import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs/operators';
+import {
+  FormControl, FormGroup
+} from '@angular/forms';
 
 @Component({
   selector: 'app-search',
@@ -8,6 +11,9 @@ import { debounceTime, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs
   styleUrls: ['./search.component.css'],
 })
 export class SearchComponent implements OnDestroy {
+  searchForm = new FormGroup({
+    searchValue: new FormControl(''),
+  });
   @Output() search = new EventEmitter<string>();
   searchTerm$ = new Subject<string>();
 
@@ -18,7 +24,9 @@ export class SearchComponent implements OnDestroy {
       debounceTime(400),
       filter ((term) => term.length > 2),
       distinctUntilChanged(),
-      tap((term) => this.search.emit(term)),
+      tap((term) => {
+        console.log(term);
+       return this.search.emit(term); }),
       takeUntil(this.destroy$),
     ).subscribe();
   }
