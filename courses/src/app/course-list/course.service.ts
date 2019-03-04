@@ -59,6 +59,7 @@ export class CourseService {
   }
 
   private convertToDBItemsCreate(item: CourseItem) {
+    console.log(item);
     return {
       id: Math.random(),
       name: item.title,

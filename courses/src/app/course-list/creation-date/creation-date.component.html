@@ -1,13 +1,14 @@
-<div class="form-group">
-  <div class="row">
-    <div class="col-4">
-      <label for="date" class="pb-1">Date</label>
-      <input type="date"
-             class="form-control"
-             id="date"
-             name="creationDate"
-             [(ngModel)]="creationDate"
-             placeholder="05.29.2018">
+<ng-container [formGroup]="creationDateForm">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-4">
+        <label for="date" class="pb-1">Date</label>
+        <input type="date"
+               class="form-control"
+               id="date"
+               formControlName="creationDate">
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+

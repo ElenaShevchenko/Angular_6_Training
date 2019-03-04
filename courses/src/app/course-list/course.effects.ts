@@ -6,10 +6,13 @@ import { catchError, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { AppStore } from '../app-store';
 import { CourseService } from './course.service';
+import { CourseItem, NewCourseItem } from './course-item.model';
 
 export enum CourseListActionTypes {
   GetCourse = 'GET_COURSE',
   RemoveCourse = 'REMOVE_COURSE',
+  CreateCourse = 'CREATE_COURSE',
+  UpdateCourse = 'UPDATE_COURSE',
 }
 
 export class GetCourse implements Action {
@@ -19,6 +22,16 @@ export class GetCourse implements Action {
 export class RemoveCourse implements Action {
   public readonly type = CourseListActionTypes.RemoveCourse;
   constructor(public payload: { courseId: number }) { }
+}
+
+export class CreateCourse implements Action {
+  public readonly type = CourseListActionTypes.CreateCourse;
+  constructor(public payload: { course: NewCourseItem }) { }
+}
+
+export class UpdateCourse implements Action {
+  public readonly type = CourseListActionTypes.UpdateCourse;
+  constructor(public payload: { course: CourseItem }) { }
 }
 
 @Injectable()
@@ -60,5 +73,23 @@ export class CourseEffects {
       switchMap((action) => this.courseService.removeCourse(action.payload.courseId)),
       map(() => new GetCourse()),
       catchError(() => of({ type: 'REMOVE_COURSE Loaded Error' })),
+    );
+
+  @Effect()
+  createCourse$ = this.actions$
+    .pipe(
+      ofType<CreateCourse>(CourseListActionTypes.CreateCourse),
+      switchMap((action) => this.courseService.createCourse(action.payload.course)),
+      map(() => new GetCourse()),
+      catchError(() => of({ type: 'CREATE_COURSE Loaded Error' })),
+    );
+
+  @Effect()
+  updateCourse$ = this.actions$
+    .pipe(
+      ofType<UpdateCourse>(CourseListActionTypes.UpdateCourse),
+      switchMap((action) => this.courseService.updateCourse(action.payload.course)),
+      map(() => new GetCourse()),
+      catchError(() => of({ type: 'UPDATE_COURSE Loaded Error' })),
     );
 }

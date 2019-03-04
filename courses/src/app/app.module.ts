@@ -22,6 +22,7 @@ import { CourseEffects } from './course-list/course.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './redusers';
 import { environment } from '../environments/environment';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { environment } from '../environments/environment';
     ModalModule.forRoot(),
     RouterModule.forRoot(appRoutes, { useHash: true }),
     HttpClientModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(appReducer),
     StoreDevtoolsModule.instrument({
       name: 'NgRx Book Store DevTools',

@@ -8,6 +8,14 @@ export interface CourseItem {
   author: string;
 }
 
+export interface NewCourseItem {
+  title: string;
+  creationDate: Date;
+  durationInMin: number;
+  description: string;
+  author: string;
+}
+
 
   export interface CourseDb {
   id: number;

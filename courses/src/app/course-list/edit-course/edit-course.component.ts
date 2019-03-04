@@ -2,6 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CourseItem } from '../course-item.model';
 import { CourseService } from '../course.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import {AppStore} from '../../app-store';
+import {RemoveCourse, UpdateCourse} from '../course.effects';
 
 
 @Component({
@@ -22,7 +25,11 @@ export class EditCourseComponent implements OnInit {
   };
   public routeParams: any = {};
 
-  constructor(private courseService: CourseService, private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private courseService: CourseService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private store$: Store<AppStore>) {
   }
 
   ngOnInit() {
@@ -43,9 +50,7 @@ export class EditCourseComponent implements OnInit {
   }
 
   save() {
-    this.courseService
-      .updateCourse(this.courseItem)
-      .subscribe();
+    this.store$.dispatch(new UpdateCourse({ course: this.courseItem }));
     this.router.navigate(['/courses']);
   }
 

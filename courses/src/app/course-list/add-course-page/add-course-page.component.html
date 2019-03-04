@@ -1,26 +1,46 @@
-<form>
+<form [formGroup]="createCourseForm">
   <div class="form-group">
     <label for="title" class="pb-1">Title</label>
-    <input type="text" 
-           class="form-control" 
+    <input
+           class="form-control"
            id="title"
-           name="title"
-           placeholder="Enter Title"
-           [(ngModel)]="newCourseItem.title">
+           required
+           formControlName="title"
+           placeholder="Enter Title">
+    <div *ngIf="title.invalid && (title.dirty || title.touched)"
+         class="alert alert-danger">
+
+      <div *ngIf="title.errors.required">
+        Name is required.
+      </div>
+      <div *ngIf="title.errors.maxlength">
+        Name can not be longer then 50 characters.
+      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="description" class="pb-1">Description</label>
     <textarea class="form-control"
-              name="description"
-              id="description" 
-              rows="3"
-              [(ngModel)]="newCourseItem.description"></textarea>
+              formControlName="description"
+              id="description"
+              required
+              rows="3"></textarea>
+    <div *ngIf="description.invalid && (description.dirty || description.touched)"
+         class="alert alert-danger">
+      <div *ngIf="description.errors.required">
+        Name is required.
+      </div>
+      <div *ngIf="description.errors.maxlength">
+        Name can not be longer then 500 characters.
+      </div>
+    </div>
   </div>
-  <app-creation-date></app-creation-date>
-  <app-duration></app-duration>
-  <app-author> </app-author>
-  <button type="button" class="btn btn-success"
-    (click)="save()">Save</button>
+  <app-creation-date formControlName ="creationDate"></app-creation-date>
+<!--  <app-duration [createCourseForm]="createCourseForm"></app-duration>
+  <app-author [createCourseForm]="createCourseForm"> </app-author>-->
+  <button type="submit" class="btn btn-success"
+          [disabled]="!createCourseForm.valid"
+          (click)="save()">Save</button>
   <a [routerLink] ="['/courses']"
      class="btn btn-danger ml-1">Cancel</a>
 </form>
