@@ -3,7 +3,7 @@
   <select multiple id="authors"
           name="authors"
           [formControl]="authorControl">
-    <option *ngFor="let author of authors$ | async" [ngValue]="author">
+    <option *ngFor="let author of (authors$ | async)" [ngValue]="author">
       {{ author.name }}
     </option>
   </select>

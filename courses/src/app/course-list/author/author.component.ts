@@ -34,12 +34,14 @@ import { GetAuthors } from '../course.effects';
 })
 
 
-export class AuthorComponent implements OnInit, ControlValueAccessor {
+export class AuthorComponent implements OnInit, ControlValueAccessor, Validator {
   constructor(
     private store$: Store<AppStore>
   ) {
   }
-  public authors$: Observable<AuthorDb[]> = this.store$.pipe(select((state) => state.authors));
+  public authors$: Observable<AuthorDb[]> = this.store$.pipe(select((state) => {
+    console.log(state, 'state');
+    return state.authors; }));
 
   public authorsForm: FormGroup = new FormGroup(    {
     authorControl: new FormControl('', [ Validators.required ])});
@@ -62,6 +64,9 @@ export class AuthorComponent implements OnInit, ControlValueAccessor {
   }
   setDisabledState?(isDisabled: boolean): void {
     isDisabled ? this.authorsForm.disable() : this.authorsForm.enable();
+  }
+  validate(c: AbstractControl): ValidationErrors | null {
+    return this.authorsForm.valid ? null : { invalidForm: {valid: false, message: 'author field are invalid'}};
   }
 }
 

@@ -47,7 +47,7 @@ export class CourseService {
   }
 
   public getAuthors() {
-    return this.http.get<Author>(`http:/localhost:3004/authors`);
+    return this.http.get<Author>(`http://localhost:3004/authors`);
   }
 
   private convertToCourseItems(courses: CourseDb[]) {

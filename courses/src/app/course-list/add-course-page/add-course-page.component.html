@@ -37,7 +37,8 @@
   </div>
   <app-creation-date formControlName ="creationDate"></app-creation-date>
   <app-duration formControlName="duration"></app-duration>
-  <app-author formControlName="author"> </app-author>
+  <app-author formControlName="author"></app-author>
+
   <button type="submit" class="btn btn-success"
           [disabled]="!createCourseForm.valid"
           (click)="save()">Save</button>
