@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -21,6 +21,8 @@ import { DurationComponent } from './duration/duration.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { HighlightItemDirective } from './highlightItem.directive';
 import { SearchComponent } from './search/search.component';
+import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { SearchComponent } from './search/search.component';
     StoreModule.forFeature('courseList', courseListReducer),
     EffectsModule.forFeature([CourseEffects]),
     ReactiveFormsModule,
+    NgMultiSelectDropDownModule
   ],
   exports: [
     CourseListComponent,

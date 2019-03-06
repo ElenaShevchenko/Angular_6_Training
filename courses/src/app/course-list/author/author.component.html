@@ -1,10 +1,15 @@
-<div class="form-group" [formGroup]="authorsForm">
-  <label for="authors" class="pb-1">Author</label>
-  <select multiple id="authors"
-          name="authors"
-          [formControl]="authorControl">
-    <option *ngFor="let author of (authors$ | async)" [ngValue]="author">
-      {{ author.name }}
-    </option>
-  </select>
+<div class="row">
+  <div class="col-12">
+    <label class="pb-1">Author</label>
+    <ng-multiselect-dropdown
+      [data]="authors$ | async"
+      [(ngModel)]="selectedItems"
+      [settings]="dropdownSettings"
+      (onSelect)="onItemSelect($event)"
+      (onSelectAll)="onSelectAll($event)"
+      (onDeSelect)="onDeSelect($event)"
+      (onDeSelectAll)="onDeSelectAll()"
+    >
+    </ng-multiselect-dropdown>
+  </div>
 </div>

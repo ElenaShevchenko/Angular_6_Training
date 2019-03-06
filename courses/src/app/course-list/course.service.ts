@@ -16,6 +16,7 @@ export class CourseService {
   constructor(private http: HttpClient) {
   }
 
+
   public getCourseList(start, count): Observable<CourseItem[]> {
     return this.http.get<CourseDb[]>(`${BASE_URL}?start=${start}&count=${count}`)
       .pipe(
@@ -35,7 +36,10 @@ export class CourseService {
   }
 
   public getCourseById(id) {
-    return this.http.get<CourseItem>(`${BASE_URL}/${id}`);
+    return this.http.get<CourseDb>(`${BASE_URL}/${id}`)
+      .pipe(
+        map((item) => this.convertToCourseItem(item)),
+      );
   }
 
   public updateCourse(item) {
@@ -50,6 +54,24 @@ export class CourseService {
     return this.http.get<Author>(`http://localhost:3004/authors`);
   }
 
+   private convertToAuthorDb(items: Author[]) {
+     return items.map((item) => {
+       const authorName = item.name.split(' ');
+       return ({
+         id: item.id,
+         firstName: authorName[0],
+         lastName: authorName[1]
+       });     });
+   }
+
+
+  private convertToAuthor(items: AuthorDb[]) {
+    return items.map((item) => ({
+      id: item.id,
+      name: item.firstName + ' ' + item.lastName
+    }));
+  }
+
   private convertToCourseItems(courses: CourseDb[]) {
     return courses.map((item) => ({
       id: item.id,
@@ -58,8 +80,20 @@ export class CourseService {
       durationInMin: item.length,
       description: item.description,
       topRated: item.isTopRated,
-      author: item.authors[0].firstName,
+      authors: this.convertToAuthor(item.authors),
     }));
+  }
+
+  private convertToCourseItem(item: CourseDb) {
+    return {
+      id: item.id,
+      title: item.name,
+      creationDate: new Date(item.date),
+      durationInMin: item.length,
+      description: item.description,
+      topRated: item.isTopRated,
+      authors: this.convertToAuthor(item.authors),
+    };
   }
 
   private convertToDBItemsCreate(item: CourseItem) {
@@ -69,13 +103,7 @@ export class CourseService {
       description: item.description,
       isTopRated: false,
       date: new Date(item.creationDate),
-      authors: [
-        {
-          id: Math.random(),
-          firstName: item.author,
-          lastName: ''
-        }
-      ],
+      authors: this.convertToAuthorDb(item.authors),
       length: item.durationInMin
     };
   }
@@ -87,13 +115,7 @@ export class CourseService {
       description: item.description,
       isTopRated: false,
       date: new Date(item.creationDate),
-      authors: [
-        {
-          id: Math.random(),
-          firstName: item.author,
-          lastName: ''
-        }
-      ],
+      authors: this.convertToAuthorDb(item.authors),
       length: item.durationInMin
     };
   }

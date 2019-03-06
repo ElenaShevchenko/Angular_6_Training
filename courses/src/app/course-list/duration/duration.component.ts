@@ -1,13 +1,11 @@
-import {Component, forwardRef} from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
-  FormControl,
-  FormGroup,
   NG_VALIDATORS,
-  NG_VALUE_ACCESSOR, ValidationErrors,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
   Validator,
-  Validators
 } from '@angular/forms';
 
 @Component({
@@ -29,29 +27,33 @@ import {
 })
 
 export class DurationComponent implements ControlValueAccessor, Validator  {
+  public value: string;
+  private propagateChange = (_: any) => { };
 
-  public durationForm: FormGroup = new FormGroup(    {
-    durationInMin: new FormControl('', [ Validators.required ])});
-
-  public onTouched: () => void = () => {};
-
-  writeValue(val: any): void {
+  public onChange(val: string) {
     if (val) {
-      this.durationForm.setValue(val, { emitEvent: false });
+      this.value = val;
+    } else {
+      this.value = null;
+    }
+    this.propagateChange(this.value);
+  }
+
+  public writeValue(val: any) {
+    if (val) {
+      this.value = val;
     }
   }
-  registerOnChange(fn: any): void {
-    console.log('on change');
-    this.durationForm.valueChanges.subscribe(fn);
+
+  public registerOnChange(fn: any) {
+    this.propagateChange = fn;
   }
-  registerOnTouched(fn: any): void {
-    console.log('on blur');
-    this.durationForm = fn;
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    isDisabled ? this.durationForm.disable() : this.durationForm.enable();
-  }
-  validate(c: AbstractControl): ValidationErrors | null {
-    return this.durationForm.valid ? null : { invalidForm: {valid: false, message: 'durationForm field are invalid'}};
+
+  public registerOnTouched(fn: any) { }
+
+  public validate(c: AbstractControl): ValidationErrors | null {
+    const d = this.value;
+    return (this.value !== null)
+      ? null : { invalidForm: { valid: false, message: 'duration field is invalid' } };
   }
 }

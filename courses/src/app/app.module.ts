@@ -22,8 +22,9 @@ import { CourseEffects } from './course-list/course.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
-import {AuthEffects} from './authorization/auth.effects';
+import { AuthEffects } from './authorization/auth.effects';
 import { appReducer } from './authorization/auth.reducer';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { appReducer } from './authorization/auth.reducer';
       logOnly: environment.production,
     }),
     EffectsModule.forRoot([CourseEffects, AuthEffects]),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [
     AuthGuard,

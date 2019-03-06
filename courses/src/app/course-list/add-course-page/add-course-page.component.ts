@@ -20,12 +20,14 @@ export class AddCoursePageComponent implements OnInit {
     description: new FormControl(),
     creationDate: new FormControl(),
     duration: new FormControl(),
-    author: new FormControl()
+    authors: new FormControl()
   });
 
   public get title() { return this.createCourseForm.get('title'); }
   public get description() { return this.createCourseForm.get('description'); }
   public get creationDate() { return this.createCourseForm.get('creationDate'); }
+  public get duration() { return this.createCourseForm.get('duration'); }
+  public get authors() { return this.createCourseForm.get('authors'); }
 
   constructor(
     private courseService: CourseService,
@@ -43,8 +45,8 @@ export class AddCoursePageComponent implements OnInit {
       title: ['', [Validators.required, Validators.maxLength(50)]],
       description: ['', [Validators.required, Validators.maxLength(500)]],
       creationDate: [''],
-      duration: [''],
-      author: ['']
+      duration: [60],
+      authors: ['']
     });
   }
 

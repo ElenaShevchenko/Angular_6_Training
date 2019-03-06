@@ -31,7 +31,8 @@ export const appRoutes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
-  { path: '**', component: PageNotFoundComponent }
+  { path: '**', component: PageNotFoundComponent },
+
 ];
 
 

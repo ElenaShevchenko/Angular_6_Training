@@ -5,7 +5,7 @@ export interface CourseItem {
   durationInMin: number;
   description: string;
   topRated: boolean;
-  author: string;
+  authors: Author[];
 }
 
 export interface NewCourseItem {
@@ -13,7 +13,7 @@ export interface NewCourseItem {
   creationDate: Date;
   durationInMin: number;
   description: string;
-  author: string;
+  authors: Author[];
 }
 
 export interface CourseDb {
@@ -36,3 +36,5 @@ export interface Author {
   id: string;
   name: string;
 }
+
+
