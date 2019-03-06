@@ -1,14 +1,12 @@
-import {Component, Input, Output, EventEmitter, forwardRef} from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import {
-  FormGroup,
-  ControlValueAccessor,
-  FormControl,
-  Validators,
-  NG_VALUE_ACCESSOR,
-  NG_VALIDATORS,
-  Validator,
   AbstractControl,
-  ValidationErrors  } from '@angular/forms';
+  ControlValueAccessor,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  ValidationErrors,
+  Validator,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-creation-date',
@@ -27,30 +25,34 @@ import {
     }
   ]
 })
-export class CreationDateComponent implements ControlValueAccessor, Validator  {
+export class CreationDateComponent implements ControlValueAccessor, Validator {
+  public value: string;
+  private propagateChange = (_: any) => { };
 
-  public creationDateForm: FormGroup = new FormGroup(    {
-      date: new FormControl('', [ Validators.required ])});
-
-  public onTouched: () => void = () => {};
-
-  writeValue(val: any): void {
+  public onChange(val: string) {
     if (val) {
-      this.creationDateForm.setValue(val, { emitEvent: false });
+      this.value = val;
+    } else {
+      this.value = null;
+    }
+    this.propagateChange(this.value);
+  }
+
+  public writeValue(val: any) {
+    if (val) {
+      this.value = val;
     }
   }
-  registerOnChange(fn: any): void {
-    console.log('on change');
-    this.creationDateForm.valueChanges.subscribe(fn);
+
+  public registerOnChange(fn: any) {
+    this.propagateChange = fn;
   }
-  registerOnTouched(fn: any): void {
-    console.log('on blur');
-    this.creationDateForm = fn;
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    isDisabled ? this.creationDateForm.disable() : this.creationDateForm.enable();
-  }
-  validate(c: AbstractControl): ValidationErrors | null {
-    return this.creationDateForm.valid ? null : { invalidForm: {valid: false, message: 'creation date field are invalid'}};
+
+  public registerOnTouched(fn: any) { }
+
+  public validate(c: AbstractControl): ValidationErrors | null {
+    const d = new Date(this.value);
+    return (this.value !== null && d instanceof Date && !isNaN(d.getTime()))
+      ? null : { invalidForm: { valid: false, message: 'creation date field are invalid' } };
   }
 }

@@ -35,9 +35,17 @@
       </div>
     </div>
   </div>
-  <app-creation-date formControlName ="creationDate"></app-creation-date>
-  <app-duration formControlName="duration"></app-duration>
-  <app-author formControlName="author"></app-author>
+  <div class="form-group">
+    <app-creation-date formControlName="creationDate"></app-creation-date>
+    <div *ngIf="creationDate.invalid && (creationDate.dirty || creationDate.touched)" class="alert alert-danger">
+      <div *ngIf="creationDate.errors.invalidForm && !creationDate.errors.invalidForm.valid">
+        {{creationDate.errors.invalidForm.message}}
+      </div>
+    </div>
+  </div>
+
+  <!-- <app-duration formControlName="duration"></app-duration>
+  <app-author formControlName="author"></app-author> -->
 
   <button type="submit" class="btn btn-success"
           [disabled]="!createCourseForm.valid"

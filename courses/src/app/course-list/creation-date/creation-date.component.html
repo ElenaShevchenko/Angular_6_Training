@@ -1,13 +1,13 @@
-<div class="form-group" [formGroup]="creationDateForm">
-    <div class="row">
-      <div class="col-4">
-        <label for="date" class="pb-1">Date</label>
-        <input type="date"
-               class="form-control"
-               id="date"
-               formControlName="date">
-      </div>
-    </div>
+<div class="row">
+  <div class="col-4">
+    <label for="date" class="pb-1">Date</label>
+    <input
+      type="date"
+      class="form-control"
+      id="date"
+      [value]="value"
+      (change)="onChange($event.target.value)"
+      (blur)="onChange($event.target.value)"
+    >
+  </div>
 </div>
-
-
