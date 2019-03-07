@@ -11,6 +11,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { AppStore } from '../../app-store';
 import { GetAuthors } from '../course.effects';
+import {isArray} from 'util';
 
 @Component({
   selector: 'app-author',
@@ -41,14 +42,12 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   private selectedItems = [];
   private dropdownSettings = {};
 
-  public value: any;
+
   private propagateChange = (_: any) => { };
 
 
   public writeValue(val: any) {
     if (val) {
-      console.log(val);
-      this.value = val;
       this.selectedItems = val;
     }
   }
@@ -60,14 +59,12 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   public registerOnTouched(fn: any) { }
 
   public validate(c: AbstractControl): ValidationErrors | null {
-    const d = this.value;
-    return (this.value !== null)
+    return (this.selectedItems !== null && isArray(this.selectedItems) && this.selectedItems.length)
       ? null : { invalidForm: { valid: false, message: 'authors field is invalid' } };
   }
 
   ngOnInit() {
     this.store$.dispatch(new GetAuthors());
-
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
@@ -85,14 +82,11 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
 
   onDeSelect(val: any) {
     if (val) {
-      this.value = val;
       this.selectedItems.forEach((item, index, array) => {
-        if (item.id === this.value.id) {
+        if (item.id === val.id) {
           return array.splice(index, 1);
         }
       });
-    } else {
-      this.value = this.selectedItems;
     }
     this.propagateChange(this.selectedItems);
   }

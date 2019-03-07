@@ -25,6 +25,13 @@ export class EditCourseComponent implements OnInit {
     authors: new FormControl()
   });
 
+  private formatDate(str) {
+    const date = new Date(str);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return [ date.getFullYear(), month, day].join('-');
+  }
+
   public get title() { return this.editCourseForm.get('title'); }
   public get description() { return this.editCourseForm.get('description'); }
   public get creationDate() { return this.editCourseForm.get('creationDate'); }
@@ -50,10 +57,11 @@ export class EditCourseComponent implements OnInit {
   }
 
   private createForm(item) {
+    console.log(item);
     this.editCourseForm = this.formBuilder.group({
       title: [item.title, [Validators.required, Validators.maxLength(50)]],
       description: [item.description, [Validators.required, Validators.maxLength(500)]],
-      creationDate: [new Date (item.creationDate)],
+      creationDate: [this.formatDate(item.creationDate)],
       duration: [item.durationInMin],
       authors: [item.authors]
     });

@@ -2,6 +2,5 @@ import {Author, CourseItem} from './course-list/course-item.model';
 
 export interface AppStore {
   isAuthenticated: boolean;
-  courseList: { items: CourseItem[], currentLength: number };
-  authors: Author[];
+  courseList: { items: CourseItem[], currentLength: number, authors: Author[]};
 }

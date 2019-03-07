@@ -28,12 +28,19 @@ import {
 
 export class DurationComponent implements ControlValueAccessor, Validator  {
   public value: string;
+  private isShown = false;
   private propagateChange = (_: any) => { };
+
+  private isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+  }
 
   public onChange(val: string) {
     if (val) {
+      this.isShown = true;
       this.value = val;
     } else {
+      this.isShown = false;
       this.value = null;
     }
     this.propagateChange(this.value);
@@ -51,9 +58,10 @@ export class DurationComponent implements ControlValueAccessor, Validator  {
 
   public registerOnTouched(fn: any) { }
 
+
   public validate(c: AbstractControl): ValidationErrors | null {
     const d = this.value;
-    return (this.value !== null)
+    return (this.value !== null && this.isNumeric(this.value))
       ? null : { invalidForm: { valid: false, message: 'duration field is invalid' } };
   }
 }
