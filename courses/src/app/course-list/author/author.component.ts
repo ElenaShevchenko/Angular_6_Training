@@ -59,6 +59,7 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   public registerOnTouched(fn: any) { }
 
   public validate(c: AbstractControl): ValidationErrors | null {
+    console.log(this.selectedItems);
     return (this.selectedItems !== null && isArray(this.selectedItems) && this.selectedItems.length)
       ? null : { invalidForm: { valid: false, message: 'authors field is invalid' } };
   }
@@ -92,7 +93,7 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   }
 
   onSelectAll(items: any) {
-    if (items && items.lenght) {
+    if (items && items.length) {
       this.selectedItems = items;
       this.propagateChange(this.selectedItems);
     }
