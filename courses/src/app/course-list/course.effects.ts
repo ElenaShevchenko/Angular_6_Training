@@ -1,59 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import {catchError, map, mergeMap, switchMap, withLatestFrom} from 'rxjs/operators';
 
 import { AppStore } from '../app-store';
 import { CourseService } from './course.service';
-import { CourseItem, NewCourseItem } from './course-item.model';
+import { CourseListActionTypes, CreateCourse, GetAuthors, GetCourse, LoadMore, RemoveCourse, Search, UpdateCourse } from './course.actions';
 
-export enum CourseListActionTypes {
-  GetCourse = 'GET_COURSE',
-  LoadMore = 'LOAD_MORE',
-  RemoveCourse = 'REMOVE_COURSE',
-  CreateCourse = 'CREATE_COURSE',
-  UpdateCourse = 'UPDATE_COURSE',
-  UpdateCounter= 'UPDATE_COUNT',
-  Search = 'SEARCH',
-  GetAuthors = 'GET_AUTHORS',
-}
-
-export class GetCourse implements Action {
-  public readonly type = CourseListActionTypes.GetCourse;
-}
-
-export class LoadMore implements Action {
-  public readonly type = CourseListActionTypes.LoadMore;
-}
-
-export class RemoveCourse implements Action {
-  public readonly type = CourseListActionTypes.RemoveCourse;
-  constructor(public payload: { courseId: number }) { }
-}
-
-export class CreateCourse implements Action {
-  public readonly type = CourseListActionTypes.CreateCourse;
-  constructor(public payload: { course: NewCourseItem }) { }
-}
-
-export class UpdateCourse implements Action {
-  public readonly type = CourseListActionTypes.UpdateCourse;
-  constructor(public payload: { course: CourseItem }) { }
-}
-
-export class UpdateCounter implements Action {
-  public readonly type = CourseListActionTypes.UpdateCounter;
-}
-
-export class Search implements Action {
-  public readonly type = CourseListActionTypes.Search;
-  constructor(public payload: { searchValue: string }) { }
-}
-
-export class GetAuthors implements Action {
-  public readonly type = CourseListActionTypes.GetAuthors;
-}
 
 @Injectable()
 export class CourseEffects {
@@ -68,14 +22,14 @@ export class CourseEffects {
     .pipe(
       ofType<GetCourse>(CourseListActionTypes.GetCourse),
       switchMap(() => this.courseService.getCourseList(0, 5)),
-      map(courses => ({ type: 'GET_COURSE Loaded Success', payload: courses })),
-      catchError(() => of({ type: 'GET_COURSE Loaded Error' })),
+      map(courses => ({ type: CourseListActionTypes.GetCourseSuccess, payload: courses })),
+      catchError(() => of({ type: CourseListActionTypes.GetCourseError})),
     );
 
   @Effect()
   loadMore$ = this.actions$
     .pipe(
-      ofType('LOAD_MORE'),
+      ofType<LoadMore>(CourseListActionTypes.LoadMore),
       withLatestFrom(
         this.store$.select(state => state.courseList.currentLength)
       ),
@@ -83,9 +37,9 @@ export class CourseEffects {
         return this.courseService.getCourseList(0, currentLength[1] + 5);
       }),
       mergeMap((courses) => ([
-        { type: 'GET_COURSE Loaded Success', payload: courses },
-        { type: 'UPDATE_COUNT'}])),
-      catchError(() => of({ type: 'GET_COURSE Loaded Error' })),
+        { type: CourseListActionTypes.GetCourseSuccess, payload: courses },
+        { type: CourseListActionTypes.UpdateCounter}])),
+      catchError(() => of({ type: CourseListActionTypes.GetCourseError })),
     );
 
   @Effect()
@@ -94,7 +48,7 @@ export class CourseEffects {
       ofType<RemoveCourse>(CourseListActionTypes.RemoveCourse),
       switchMap((action) => this.courseService.removeCourse(action.payload.courseId)),
       map(() => new GetCourse()),
-      catchError(() => of({ type: 'REMOVE_COURSE Loaded Error' })),
+      catchError(() => of({ type: CourseListActionTypes.RemoveCourseError })),
     );
 
   @Effect()
@@ -103,7 +57,7 @@ export class CourseEffects {
       ofType<CreateCourse>(CourseListActionTypes.CreateCourse),
       switchMap((action) => this.courseService.createCourse(action.payload.course)),
       map(() => new GetCourse()),
-      catchError(() => of({ type: 'CREATE_COURSE Loaded Error' })),
+      catchError(() => of({ type: CourseListActionTypes.CreateCourseError })),
     );
 
   @Effect()
@@ -112,7 +66,7 @@ export class CourseEffects {
       ofType<UpdateCourse>(CourseListActionTypes.UpdateCourse),
       switchMap((action) => this.courseService.updateCourse(action.payload.course)),
       map(() => new GetCourse()),
-      catchError(() => of({ type: 'UPDATE_COURSE Loaded Error' })),
+      catchError(() => of({ type: CourseListActionTypes.UpdateCourseError })),
     );
 
   @Effect()
@@ -120,8 +74,8 @@ export class CourseEffects {
     .pipe(
       ofType<Search>(CourseListActionTypes.Search),
       switchMap((action) => this.courseService.searchEntries(action.payload.searchValue)),
-      map((courses) => ({ type: 'SEARCH Loaded Success', payload: courses })),
-      catchError(() => of({ type: 'SEARCH Loaded Error' })),
+      map((courses) => ({ type: CourseListActionTypes.SearchSuccess, payload: courses })),
+      catchError(() => of({ type: CourseListActionTypes.SearchError })),
         );
 
   @Effect()
@@ -129,7 +83,7 @@ export class CourseEffects {
     .pipe(
       ofType<GetAuthors>(CourseListActionTypes.GetAuthors),
       switchMap(() => this.courseService.getAuthors()),
-      map(authors => ({ type: 'GET_AUTHORS Loaded Success', payload: authors })),
-      catchError(() => of({ type: 'GET_AUTHORS Loaded Error' })),
+      map(authors => ({ type: CourseListActionTypes.GetAuthorsSuccess, payload: authors })),
+      catchError(() => of({ type: CourseListActionTypes.GetAuthorsError })),
     );
 }

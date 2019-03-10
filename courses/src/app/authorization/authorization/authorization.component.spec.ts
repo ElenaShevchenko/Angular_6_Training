@@ -4,7 +4,7 @@ import {Router, RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {appRoutes} from '../../app-routing.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {AuthGuard} from '../../auth.guard';
+import {AuthGuard} from '../auth.guard';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('AuthorizationComponent', () => {

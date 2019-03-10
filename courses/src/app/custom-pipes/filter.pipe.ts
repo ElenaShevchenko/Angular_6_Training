@@ -1,4 +1,5 @@
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
+import {CourseItem} from '../course-list/course-item.model';
 
 @Pipe({
   name: 'filterByTitle'
@@ -8,7 +9,7 @@ import {Injectable, Pipe, PipeTransform} from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(items: any[], searchValue?: any): any {
+  transform(items: CourseItem[], searchValue?: string): CourseItem[] {
     if (!items || !searchValue) {
       return items;
     }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AppStore } from '../../app-store';
-import { CreateCourse } from '../course.effects';
+import { CreateCourse } from '../course.actions';
 import { CourseService } from '../course.service';
 
 

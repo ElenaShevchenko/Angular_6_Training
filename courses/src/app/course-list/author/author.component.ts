@@ -6,11 +6,11 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
-import { Author } from '../course-item.model';
+import {Author, CourseItem} from '../course-item.model';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { AppStore } from '../../app-store';
-import { GetAuthors } from '../course.effects';
+import { GetAuthors } from '../course.actions';
 import {isArray} from 'util';
 
 @Component({
@@ -46,7 +46,7 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   private propagateChange = (_: any) => { };
 
 
-  public writeValue(val: any) {
+  public writeValue(val: CourseItem[]) {
     if (val) {
       this.selectedItems = val;
     }
@@ -77,11 +77,11 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
     };
   }
 
-  onItemSelect(val: any) {
+  onItemSelect(val: CourseItem) {
     this.propagateChange(this.selectedItems);
   }
 
-  onDeSelect(val: any) {
+  onDeSelect(val: CourseItem) {
     if (val) {
       this.selectedItems.forEach((item, index, array) => {
         if (item.id === val.id) {
@@ -92,7 +92,7 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
     this.propagateChange(this.selectedItems);
   }
 
-  onSelectAll(items: any) {
+  onSelectAll(items: CourseItem[]) {
     if (items && items.length) {
       this.selectedItems = items;
       this.propagateChange(this.selectedItems);

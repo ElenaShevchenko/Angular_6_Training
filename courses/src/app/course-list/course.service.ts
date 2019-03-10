@@ -46,7 +46,7 @@ export class CourseService {
     return this.http.put<CourseItem>(`${BASE_URL}/${item.id}`, this.convertToDBItemsUpdate(item));
   }
 
-  public removeCourse(id): any {
+  public removeCourse(id): Observable<CourseItem> {
     return this.http.delete<CourseItem>(`${BASE_URL}/${id}`);
   }
 

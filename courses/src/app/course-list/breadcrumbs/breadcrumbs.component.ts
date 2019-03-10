@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../course.service';
 import { ActivatedRoute } from '@angular/router';
+import {CourseItem, RouteParamModel} from '../course-item.model';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -9,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BreadcrumbsComponent implements OnInit {
   public courseTitle: String = '';
-  public routeParams: any = {};
+  public routeParams: RouteParamModel = {};
 
   constructor(private courseService: CourseService, private route: ActivatedRoute) { }
 
@@ -21,8 +22,8 @@ export class BreadcrumbsComponent implements OnInit {
       }
     });
     if ( this.routeParams.id) {
-      this.courseService.getCourseById(this.routeParams.id).subscribe((res: any) => {
-        this.courseTitle =  res.name;
+      this.courseService.getCourseById(this.routeParams.id).subscribe((res: CourseItem) => {
+        this.courseTitle =  res.title;
       });
     }
   }

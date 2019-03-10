@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthorizationService } from '../../authorization.service';
+import { AuthorizationService } from '../authorization.service';
 import { select, Store } from '@ngrx/store';
 import { AppStore } from '../../app-store';
 import { Login } from '../auth.effects';

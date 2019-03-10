@@ -1,3 +1,5 @@
+import { CourseListActionTypes } from './course.actions';
+
 const courseListInitialState = {
   items: [],
   currentLength: 5,
@@ -9,22 +11,22 @@ export function courseListReducer(
   action
 ) {
   switch (action.type) {
-    case 'GET_COURSE Loaded Success': {
+    case CourseListActionTypes.GetCourseSuccess: {
       state.items = action.payload;
       break;
     }
-    case 'UPDATE_COUNT':
+    case CourseListActionTypes.UpdateCounter:
       if (state.currentLength > (state.items.length - 5)) {
         state.currentLength = state.items.length;
       } else {
         state.currentLength = state.currentLength + 5;
       }
       break;
-    case 'SEARCH Loaded Success': {
+    case CourseListActionTypes.SearchSuccess: {
       state.items = action.payload;
       break;
     }
-    case 'GET_AUTHORS Loaded Success': {
+    case CourseListActionTypes.GetAuthorsSuccess: {
       state.authors = action.payload;
       break;
     }

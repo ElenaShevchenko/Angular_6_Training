@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
-import { AuthorizationService } from './authorization.service';
+import { AuthorizationService } from './authorization/authorization.service';
 import { Router } from '@angular/router';
 import { User } from './user/user.model';
 import { Subscription, BehaviorSubject } from 'rxjs';

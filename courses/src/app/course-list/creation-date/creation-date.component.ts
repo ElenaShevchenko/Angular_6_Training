@@ -38,7 +38,7 @@ export class CreationDateComponent implements ControlValueAccessor, Validator {
     this.propagateChange(this.value);
   }
 
-  public writeValue(val: any) {
+  public writeValue(val: string) {
     if (val) {
       this.value = val;
     }

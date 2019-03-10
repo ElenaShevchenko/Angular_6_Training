@@ -1,11 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { CourseItem } from '../course-item.model';
+import { Component, OnInit } from '@angular/core';
+import { CourseItem, RouteParamModel } from '../course-item.model';
 import { CourseService } from '../course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {AppStore} from '../../app-store';
-import {RemoveCourse, UpdateCourse} from '../course.effects';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { AppStore } from '../../app-store';
+import { UpdateCourse } from '../course.actions';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
 @Component({
@@ -16,7 +16,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 export class EditCourseComponent implements OnInit {
   public courseItem: CourseItem;
-  public routeParams: any = {};
+  public routeParams: RouteParamModel = {};
   public editCourseForm = new FormGroup({
     title: new FormControl(),
     description: new FormControl(),
@@ -50,14 +50,13 @@ export class EditCourseComponent implements OnInit {
     this.route.params.subscribe((data) => {
       this.routeParams.id = data.id;
     });
-    this.courseService.getCourseById(this.routeParams.id).subscribe((res: any) => {
+    this.courseService.getCourseById(this.routeParams.id).subscribe((res: CourseItem) => {
         this.courseItem = res;
         this.createForm(this.courseItem);
       });
   }
 
   private createForm(item) {
-    console.log(item);
     this.editCourseForm = this.formBuilder.group({
       title: [item.title, [Validators.required, Validators.maxLength(50)]],
       description: [item.description, [Validators.required, Validators.maxLength(500)]],

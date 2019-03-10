@@ -1,11 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import {CourseItem} from '../course-list/course-item.model';
 
 @Pipe({
   name: 'orderBy'
 })
 export class OrderByPipe implements PipeTransform {
 
-  transform(allItems: any[]): any {
+  transform(allItems: CourseItem[]): CourseItem[] {
    if (!allItems) {
      return allItems;
    }

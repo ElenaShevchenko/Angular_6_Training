@@ -37,4 +37,8 @@ export interface Author {
   name: string;
 }
 
+export  interface RouteParamModel {
+  id?: number;
+  name?: string;
+}
 

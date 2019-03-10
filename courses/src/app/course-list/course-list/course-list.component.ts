@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { AppStore } from '../../app-store';
 import { CourseItem } from '../course-item.model';
-import { RemoveCourse, Search, GetCourse, LoadMore } from '../course.effects';
+import { RemoveCourse, Search, GetCourse, LoadMore } from '../course.actions';
 
 @Component({
   selector: 'app-course-list',

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 
-import { User } from './user/user.model';
+import { User } from '../user/user.model';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+
 
 const BASE_URL = 'http://localhost:3004/auth/';
 
@@ -13,7 +14,8 @@ const BASE_URL = 'http://localhost:3004/auth/';
 })
 
 export class AuthorizationService {
-  public isAuthenticated$ = new BehaviorSubject(false);
+  private isTokenExist = localStorage.getItem('fakeToken') || false;
+  public isAuthenticated$ = new BehaviorSubject(!!this.isTokenExist);
 
   constructor(
     private http: HttpClient,

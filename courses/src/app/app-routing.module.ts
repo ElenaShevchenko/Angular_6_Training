@@ -4,7 +4,7 @@ import { AddCoursePageComponent } from './course-list/add-course-page/add-course
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { EditCourseComponent } from './course-list/edit-course/edit-course.component';
 import { AuthorizationComponent } from './authorization/authorization/authorization.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './authorization/auth.guard';
 
 export const appRoutes: Routes = [
   {
@@ -28,10 +28,13 @@ export const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: '/login',
     pathMatch: 'full',
   },
-  { path: '**', component: PageNotFoundComponent },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  },
 
 ];
 
