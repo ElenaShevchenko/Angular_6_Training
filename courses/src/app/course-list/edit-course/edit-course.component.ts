@@ -21,7 +21,7 @@ export class EditCourseComponent implements OnInit {
     title: new FormControl(),
     description: new FormControl(),
     creationDate: new FormControl(),
-    duration: new FormControl(),
+    durationInMin: new FormControl(),
     authors: new FormControl()
   });
 
@@ -35,7 +35,7 @@ export class EditCourseComponent implements OnInit {
   public get title() { return this.editCourseForm.get('title'); }
   public get description() { return this.editCourseForm.get('description'); }
   public get creationDate() { return this.editCourseForm.get('creationDate'); }
-  public get duration() { return this.editCourseForm.get('duration'); }
+  public get durationInMin() { return this.editCourseForm.get('durationInMin'); }
   public get authors() { return this.editCourseForm.get('authors'); }
 
   constructor(
@@ -61,7 +61,7 @@ export class EditCourseComponent implements OnInit {
       title: [item.title, [Validators.required, Validators.maxLength(50)]],
       description: [item.description, [Validators.required, Validators.maxLength(500)]],
       creationDate: [this.formatDate(item.creationDate)],
-      duration: [item.durationInMin],
+      durationInMin: [item.durationInMin],
       authors: [item.authors]
     });
   }
