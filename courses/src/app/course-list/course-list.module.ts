@@ -21,7 +21,8 @@ import { DurationComponent } from './duration/duration.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
 import { HighlightItemDirective } from './highlightItem.directive';
 import { SearchComponent } from './search/search.component';
-import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
     DurationComponent,
     AuthorComponent,
     EditCourseComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +49,8 @@ import {NgMultiSelectDropDownModule} from 'ng-multiselect-dropdown';
     StoreModule.forFeature('courseList', courseListReducer),
     EffectsModule.forFeature([CourseEffects]),
     ReactiveFormsModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
+    TranslateModule
   ],
   exports: [
     CourseListComponent,

@@ -1,7 +1,9 @@
 <div>
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb col">
-      <li class="breadcrumb-item"><a [routerLink] ="['/courses']">Courses</a></li>
+      <li class="breadcrumb-item"><a [routerLink] ="['/courses']">
+        {{'COURSES'| translate}}
+      </a></li>
       <li class="breadcrumb-item"><span>{{courseTitle}}</span></li>
     </ol>
   </nav>

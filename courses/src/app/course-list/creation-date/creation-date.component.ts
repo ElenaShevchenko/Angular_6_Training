@@ -7,6 +7,9 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
+import {Store} from '@ngrx/store';
+import {AppStore} from '../../app-store';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-creation-date',
@@ -27,6 +30,18 @@ import {
 })
 export class CreationDateComponent implements ControlValueAccessor, Validator {
   public value: string;
+  public invalidMessage: string;
+
+  constructor(
+    translate: TranslateService
+  ) {
+    translate.get('CREATION_DATA').subscribe((res1: string) => {
+      translate.get('FIELD_ARE_INVALID').subscribe((res2: string) => {
+        this.invalidMessage = res1 + ' ' + res2;
+      });
+    });
+  }
+
   private propagateChange = (_: any) => { };
 
   public onChange(val: string) {
@@ -53,6 +68,6 @@ export class CreationDateComponent implements ControlValueAccessor, Validator {
   public validate(c: AbstractControl): ValidationErrors | null {
     const d = new Date(this.value);
     return (this.value !== null && d instanceof Date && !isNaN(d.getTime()))
-      ? null : { invalidForm: { valid: false, message: 'creation date field are invalid' } };
+      ? null : { invalidForm: { valid: false, message: this.invalidMessage } };
   }
 }

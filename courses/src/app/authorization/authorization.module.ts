@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { AuthEffects } from './auth.effects';
     StoreModule.forFeature('isAuthenticated', appReducer),
     EffectsModule.forFeature([AuthEffects]),
     ReactiveFormsModule,
+    TranslateModule
   ],
   exports: [
     AuthorizationComponent

@@ -3,7 +3,7 @@
     <input class="form-control mr-sm-2"
            type="search"
            formControlName="searchValue"
-           placeholder="Search"
+           [placeholder]=searchPlaceholder
            (keyup)="searchTerm$.next(searchForm.get('searchValue').value)">
   </form>
 </nav>

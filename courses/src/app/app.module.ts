@@ -12,7 +12,7 @@ import { AuthorizationModule } from './authorization/authorization.module';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app-routing.module';
 import { AuthGuard } from './authorization/auth.guard';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
 import { AuthorizationService } from './authorization/authorization.service';
 import { AuthInterceptor } from './authorization/auth-interceptor';
 import { LoadingScreenInterceptor } from './core/loading/loading.interceptor';
@@ -25,6 +25,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthEffects } from './authorization/auth.effects';
 import { appReducer } from './authorization/auth.reducer';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {MissingTranslationHandler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import { AppMissingTranslationHandler } from './missing-translation-handler';
+
+export function  createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -49,6 +56,17 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     }),
     EffectsModule.forRoot([CourseEffects, AuthEffects]),
     NgMultiSelectDropDownModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      },
+      missingTranslationHandler: {
+        provide: MissingTranslationHandler,
+        useClass: AppMissingTranslationHandler,
+      }
+    })
   ],
   providers: [
     AuthGuard,

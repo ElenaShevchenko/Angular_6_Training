@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-4">
-    <label for="duration" class="pb-1">Duration</label>
+    <label for="duration" class="pb-1">{{'DURATION'| translate}}</label>
     <input
       type="number"
       class="form-control"
@@ -13,7 +13,7 @@
   <div class="col-8" *ngIf = isShown>
     <label class="pb-1"></label>
     <div class="form-control-plaintext">
-      In {{this.value | duration}}
+      {{'IN'| translate}} {{this.value | duration}}
     </div>
   </div>
 </div>

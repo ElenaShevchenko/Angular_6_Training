@@ -3,5 +3,14 @@
       <div class="col-8">
         <app-logo></app-logo>
       </div>
+      <div class="col-4">
+        <select [(ngModel)]="selected"
+                name = 'languages'
+                (change)="changeLang($event.target.value)">
+          <option *ngFor="let lang of languages" [value]="lang.id">
+            {{lang.name}}
+          </option>
+        </select>
+      </div>
     </nav>
 </header>

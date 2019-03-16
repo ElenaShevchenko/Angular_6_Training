@@ -15,7 +15,7 @@
   <button type="button"
           *ngIf="!courseList.length"
           class="btn btn-success btn-block mt-1 mb-1 load-more-button">
-    NO DATA, FEEL FREE TO ADD NEW COURSE
+    {{'NO_DATA'| translate}}
   </button>
   <div class="list-group course-list"
       *ngIf="courseList.length">
@@ -26,7 +26,7 @@
       </app-course-item>
       <button type="button"
               class="btn btn-success btn-block mt-3 mb-5 load-more-button"
-              (click)="loadMore()">Load More...</button>
+              (click)="loadMore()">{{'LOAD_MORE'| translate}}</button>
   </div>
 </ng-container>
 

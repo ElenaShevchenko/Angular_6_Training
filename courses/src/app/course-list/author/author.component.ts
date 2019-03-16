@@ -12,6 +12,7 @@ import { Observable, Subject } from 'rxjs';
 import { AppStore } from '../../app-store';
 import { GetAuthors } from '../course.actions';
 import {isArray} from 'util';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-author',
@@ -33,9 +34,17 @@ import {isArray} from 'util';
 
 
 export class AuthorComponent implements ControlValueAccessor, Validator, OnInit {
+  public invalidMessage: string;
   constructor(
-    private store$: Store<AppStore>
-  ) {}
+    private store$: Store<AppStore>,
+    translate: TranslateService
+  ) {
+    translate.get('AUTHORS').subscribe((res1: string) => {
+      translate.get('FIELD_ARE_INVALID').subscribe((res2: string) => {
+        this.invalidMessage = res1 + ' ' + res2;
+      });
+    });
+  }
   public authors$: Observable<Author[]> = this.store$.pipe(select((state) => {
     return state.courseList.authors; }));
 
@@ -61,7 +70,7 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   public validate(c: AbstractControl): ValidationErrors | null {
     console.log(this.selectedItems);
     return (this.selectedItems !== null && isArray(this.selectedItems) && this.selectedItems.length)
-      ? null : { invalidForm: { valid: false, message: 'authors field is invalid' } };
+      ? null : { invalidForm: { valid: false, message:  this.invalidMessage } };
   }
 
   ngOnInit() {

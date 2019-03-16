@@ -1,6 +1,6 @@
 <form [formGroup]="createCourseForm">
   <div class="form-group">
-    <label for="title" class="pb-1">Title</label>
+    <label for="title" class="pb-1">{{'TITLE'| translate}}</label>
     <input
       class="form-control"
       id="title"
@@ -11,15 +11,17 @@
          class="alert alert-danger">
 
       <div *ngIf="title.errors.required">
-        Name is required.
+        {{'REQUIRED'| translate}}
       </div>
       <div *ngIf="title.errors.maxlength">
-        Name can not be longer then 50 characters.
+        {{'CAN_NOT_BE_LONGER_50'| translate}}
       </div>
     </div>
   </div>
   <div class="form-group">
-    <label for="description" class="pb-1">Description</label>
+    <label for="description" class="pb-1">
+      {{'DESCRIPTION' | translate}}
+    </label>
     <textarea class="form-control"
               formControlName="description"
               id="description"
@@ -28,16 +30,17 @@
     <div *ngIf="description.invalid && (description.dirty || description.touched)"
          class="alert alert-danger">
       <div *ngIf="description.errors.required">
-        Name is required.
+        {{'REQUIRED'| translate}}
       </div>
       <div *ngIf="description.errors.maxlength">
-        Name can not be longer then 500 characters.
+        {{'CAN_NOT_BE_LONGER_500'| translate}}
       </div>
     </div>
   </div>
   <div class="form-group">
     <app-creation-date formControlName="creationDate"></app-creation-date>
-    <div *ngIf="creationDate.invalid && (creationDate.dirty || creationDate.touched)" class="alert alert-danger">
+    <div *ngIf="creationDate.invalid && (creationDate.dirty || creationDate.touched)"
+         class="alert alert-danger">
       <div *ngIf="creationDate.errors.invalidForm && !creationDate.errors.invalidForm.valid">
         {{creationDate.errors.invalidForm.message}}
       </div>
@@ -62,7 +65,7 @@
 
   <button type="submit" class="btn btn-success"
           [disabled]="!createCourseForm.valid"
-          (click)="save()">Save</button>
+          (click)="save()">{{'SAVE'| translate}}</button>
   <a [routerLink] ="['/courses']"
-     class="btn btn-danger ml-1">Cancel</a>
+     class="btn btn-danger ml-1">{{'CANCEL' | translate}}</a>
 </form>

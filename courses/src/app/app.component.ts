@@ -3,6 +3,7 @@ import { AuthorizationService } from './authorization/authorization.service';
 import { Router } from '@angular/router';
 import { User } from './user/user.model';
 import { Subscription, BehaviorSubject } from 'rxjs';
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 
 
 @Component({
@@ -20,7 +21,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthorizationService,
     private router: Router,
-  ) { }
+    public translate: TranslateService
+  ) {
+    translate.setDefaultLang('en');
+  }
 
   ngOnInit() {
     this.authService.isAuthenticated$

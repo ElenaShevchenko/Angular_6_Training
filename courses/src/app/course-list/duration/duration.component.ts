@@ -7,6 +7,7 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-duration',
@@ -29,6 +30,18 @@ import {
 export class DurationComponent implements ControlValueAccessor, Validator  {
   public value: string;
   private isShown = false;
+  public invalidMessage: string;
+
+  constructor(
+    translate: TranslateService
+  ) {
+    translate.get('DURATION').subscribe((res1: string) => {
+      translate.get('FIELD_ARE_INVALID').subscribe((res2: string) => {
+        this.invalidMessage = res1 + ' ' + res2;
+      });
+    });
+  }
+
   private propagateChange = (_: any) => { };
 
   private isNumeric(n) {
@@ -62,6 +75,6 @@ export class DurationComponent implements ControlValueAccessor, Validator  {
   public validate(c: AbstractControl): ValidationErrors | null {
     const d = this.value;
     return (this.value !== null && this.isNumeric(this.value))
-      ? null : { invalidForm: { valid: false, message: 'duration field is invalid' } };
+      ? null : { invalidForm: { valid: false, message: this.invalidMessage } };
   }
 }
