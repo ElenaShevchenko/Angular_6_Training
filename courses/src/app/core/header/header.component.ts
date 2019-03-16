@@ -7,7 +7,6 @@ import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  selectedOption: string;
 
   languages = [
     { name: 'English', id: 'en' },
