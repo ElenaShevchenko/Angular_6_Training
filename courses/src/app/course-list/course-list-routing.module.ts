@@ -3,20 +3,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { CourseListComponent } from './course-list/course-list.component';
 import { AddCoursePageComponent } from './add-course-page/add-course-page.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
+import { AuthGuard } from '../authorization/auth.guard';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: CourseListComponent
+    component: CourseListComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'courses/new',
-    component: AddCoursePageComponent
+    path: 'new',
+    component: AddCoursePageComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'courses/:id',
-    component: EditCourseComponent
+    path: ':id',
+    component: EditCourseComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

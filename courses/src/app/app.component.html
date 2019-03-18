@@ -3,7 +3,7 @@
     <app-header></app-header>
 
     <div class="block container-fluid"
-        >
+         *ngIf="isAuthenticated$ | async">
       <nav class="navbar row">
         <div class="col align-self-end text-right">
           <app-user></app-user>

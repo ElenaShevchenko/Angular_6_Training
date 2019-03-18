@@ -11,8 +11,6 @@ export const appRoutes: Routes = [
   {
     path: 'courses',
     loadChildren: './course-list/course-list.module#CourseListModule',
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
   },
   {
     path: '',

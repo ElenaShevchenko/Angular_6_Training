@@ -12,7 +12,7 @@ import { AuthorizationModule } from './authorization/authorization.module';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app-routing.module';
 import { AuthGuard } from './authorization/auth.guard';
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthorizationService } from './authorization/authorization.service';
 import { AuthInterceptor } from './authorization/auth-interceptor';
 import { LoadingScreenInterceptor } from './core/loading/loading.interceptor';
@@ -40,9 +40,7 @@ export function  createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     CoreModule,
-    CourseListModule,
     UserModule,
-    AuthorizationModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
