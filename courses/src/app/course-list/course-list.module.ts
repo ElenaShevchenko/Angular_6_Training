@@ -23,6 +23,7 @@ import { HighlightItemDirective } from './highlightItem.directive';
 import { SearchComponent } from './search/search.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TranslateModule } from '@ngx-translate/core';
+import { CourseListRoutingModule } from './course-list-routing.module';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { TranslateModule } from '@ngx-translate/core';
     EffectsModule.forFeature([CourseEffects]),
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
-    TranslateModule
+    TranslateModule,
+    CourseListRoutingModule
   ],
   exports: [
     CourseListComponent,

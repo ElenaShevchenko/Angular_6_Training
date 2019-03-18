@@ -3,7 +3,7 @@ import { AuthorizationService } from './authorization/authorization.service';
 import { Router } from '@angular/router';
 import { User } from './user/user.model';
 import { Subscription, BehaviorSubject } from 'rxjs';
-import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
