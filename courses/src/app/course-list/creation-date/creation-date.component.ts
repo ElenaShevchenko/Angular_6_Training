@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -7,9 +7,10 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import {Store} from '@ngrx/store';
-import {AppStore} from '../../app-store';
-import {TranslateService} from '@ngx-translate/core';
+
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import {merge, Subscription} from 'rxjs';
+import {mergeAll} from 'rxjs/operators';
 
 @Component({
   selector: 'app-creation-date',
@@ -28,17 +29,19 @@ import {TranslateService} from '@ngx-translate/core';
     }
   ]
 })
-export class CreationDateComponent implements ControlValueAccessor, Validator {
+export class CreationDateComponent implements ControlValueAccessor, Validator, OnInit, OnDestroy {
   public value: string;
   public invalidMessage: string;
+  translationSubscription: Subscription;
 
   constructor(
-    translate: TranslateService
-  ) {
-    translate.get('CREATION_DATA').subscribe((res1: string) => {
-      translate.get('FIELD_ARE_INVALID').subscribe((res2: string) => {
-        this.invalidMessage = res1 + ' ' + res2;
-      });
+    public translate: TranslateService
+  ) {}
+
+  ngOnInit() {
+    this.translateMes();
+    this.translationSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translateMes();
     });
   }
 
@@ -69,5 +72,18 @@ export class CreationDateComponent implements ControlValueAccessor, Validator {
     const d = new Date(this.value);
     return (this.value !== null && d instanceof Date && !isNaN(d.getTime()))
       ? null : { invalidForm: { valid: false, message: this.invalidMessage } };
+  }
+
+  public translateMes () {
+    const translation = merge(
+      this.translate.get(['CREATION_DATA', 'FIELD_ARE_INVALID'])
+    );
+    translation.subscribe((res: {'CREATION_DATA': string, 'FIELD_ARE_INVALID': string} ) => {
+      this.invalidMessage = res.CREATION_DATA + ' ' + res.FIELD_ARE_INVALID;
+    });
+  }
+
+  ngOnDestroy() {
+    this.translationSubscription.unsubscribe();
   }
 }

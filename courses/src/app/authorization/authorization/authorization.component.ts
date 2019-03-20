@@ -4,7 +4,7 @@ import { AuthorizationService } from '../authorization.service';
 import { select, Store } from '@ngrx/store';
 import { AppStore } from '../../app-store';
 import { Login } from '../auth.effects';
-import { Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 
@@ -18,16 +18,17 @@ export class AuthorizationComponent implements OnInit {
     userLogin: new FormControl('Warner' , [Validators.required]),
     userPassword: new FormControl('ea' , [Validators.required])
   });
+  public isAuthenticated$ = new Observable();
 
   constructor(
     private authorizationService: AuthorizationService,
     private router: Router,
-    private store$: Store<AppStore>
+    private store$: Store<AppStore>,
   ) {
   }
-  public isAuthenticated: Observable<boolean> = this.store$.pipe(select((state) => state.isAuthenticated));
 
   ngOnInit() {
+  this.isAuthenticated$ = this.store$.pipe(select((state) => state.isAuthenticated));
     if (this.authorizationService.isAuthenticated$.getValue()) {
       this.authorizationService.loginOut();
     }

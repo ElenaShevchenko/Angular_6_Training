@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
+import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -8,11 +8,11 @@ import {
 } from '@angular/forms';
 import {Author, CourseItem} from '../course-item.model';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
+import {merge, Observable, Subject, Subscription} from 'rxjs';
 import { AppStore } from '../../app-store';
 import { GetAuthors } from '../course.actions';
 import {isArray} from 'util';
-import {TranslateService} from '@ngx-translate/core';
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-author',
@@ -33,23 +33,19 @@ import {TranslateService} from '@ngx-translate/core';
 })
 
 
-export class AuthorComponent implements ControlValueAccessor, Validator, OnInit {
+export class AuthorComponent implements ControlValueAccessor, Validator, OnInit, OnDestroy {
   public invalidMessage: string;
   constructor(
     private store$: Store<AppStore>,
-    translate: TranslateService
+    public translate: TranslateService
   ) {
-    translate.get('AUTHORS').subscribe((res1: string) => {
-      translate.get('FIELD_ARE_INVALID').subscribe((res2: string) => {
-        this.invalidMessage = res1 + ' ' + res2;
-      });
-    });
   }
   public authors$: Observable<Author[]> = this.store$.pipe(select((state) => {
     return state.courseList.authors; }));
 
   private selectedItems = [];
   private dropdownSettings = {};
+  translationSubscription: Subscription;
 
 
   private propagateChange = (_: any) => { };
@@ -84,6 +80,10 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
+    this.translateMes();
+    this.translationSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translateMes();
+    });
   }
 
   onItemSelect(val: CourseItem) {
@@ -111,6 +111,19 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit 
   onDeSelectAll () {
     this.selectedItems = [];
     this.propagateChange(this.selectedItems);
+  }
+
+  public translateMes () {
+    const translation = merge(
+      this.translate.get(['AUTHORS', 'FIELD_ARE_INVALID'])
+    );
+    translation.subscribe((res: {'AUTHORS': string, 'FIELD_ARE_INVALID': string} ) => {
+      this.invalidMessage = res.AUTHORS + ' ' + res.FIELD_ARE_INVALID;
+    });
+  }
+
+  ngOnDestroy() {
+    this.translationSubscription.unsubscribe();
   }
 }
 

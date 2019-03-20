@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -7,7 +7,9 @@ import {
   ValidationErrors,
   Validator,
 } from '@angular/forms';
-import {TranslateService} from '@ngx-translate/core';
+import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import {merge, Subscription} from 'rxjs';
+import {GetAuthors} from '../course.actions';
 
 @Component({
   selector: 'app-duration',
@@ -27,19 +29,15 @@ import {TranslateService} from '@ngx-translate/core';
   ]
 })
 
-export class DurationComponent implements ControlValueAccessor, Validator  {
+export class DurationComponent implements ControlValueAccessor, Validator, OnInit, OnDestroy  {
   public value: string;
   private isShown = false;
   public invalidMessage: string;
+  translationSubscription: Subscription;
 
   constructor(
-    translate: TranslateService
+    public translate: TranslateService
   ) {
-    translate.get('DURATION').subscribe((res1: string) => {
-      translate.get('FIELD_ARE_INVALID').subscribe((res2: string) => {
-        this.invalidMessage = res1 + ' ' + res2;
-      });
-    });
   }
 
   private propagateChange = (_: any) => { };
@@ -76,5 +74,24 @@ export class DurationComponent implements ControlValueAccessor, Validator  {
     const d = this.value;
     return (this.value !== null && this.isNumeric(this.value))
       ? null : { invalidForm: { valid: false, message: this.invalidMessage } };
+  }
+
+  ngOnInit() {
+    this.translateMes();
+    this.translationSubscription = this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.translateMes();
+    });
+  }
+  public translateMes () {
+    const translation = merge(
+      this.translate.get(['DURATION', 'FIELD_ARE_INVALID'])
+    );
+    translation.subscribe((res: {'DURATION': string, 'FIELD_ARE_INVALID': string} ) => {
+      this.invalidMessage = res.DURATION + ' ' + res.FIELD_ARE_INVALID;
+    });
+  }
+
+  ngOnDestroy() {
+    this.translationSubscription.unsubscribe();
   }
 }

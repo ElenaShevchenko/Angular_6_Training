@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthorizationService } from './authorization/authorization.service';
 import { Router } from '@angular/router';
 import { User } from './user/user.model';
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public user: User;
   public isAuthenticated$ = new BehaviorSubject(false);
   private usersSubscription: Subscription;
+  private authServiceSubscription: Subscription;
 
   constructor(
     private authService: AuthorizationService,
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.isAuthenticated$
+   this.authServiceSubscription = this.authService.isAuthenticated$
       .subscribe((val) => {
         this.isAuthenticated$.next(val);
         if (val) {
@@ -49,5 +50,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(): void {
     this.usersSubscription.unsubscribe();
+    this.authServiceSubscription.unsubscribe();
   }
 }

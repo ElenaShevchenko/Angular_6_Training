@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CourseItem, RouteParamModel } from '../course-item.model';
 import { CourseService } from '../course.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppStore } from '../../app-store';
 import { UpdateCourse } from '../course.actions';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./edit-course.component.css']
 })
 
-export class EditCourseComponent implements OnInit {
+export class EditCourseComponent implements OnInit, OnDestroy {
   public courseItem: CourseItem;
   public routeParams: RouteParamModel = {};
   public editCourseForm = new FormGroup({
@@ -24,6 +25,8 @@ export class EditCourseComponent implements OnInit {
     durationInMin: new FormControl(),
     authors: new FormControl()
   });
+  routeParamsSubscription: Subscription;
+  getCourseByIdSubscription: Subscription;
 
   private formatDate(str) {
     const date = new Date(str);
@@ -47,10 +50,10 @@ export class EditCourseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.params.subscribe((data) => {
+    this.routeParamsSubscription = this.route.params.subscribe((data) => {
       this.routeParams.id = data.id;
     });
-    this.courseService.getCourseById(this.routeParams.id).subscribe((res: CourseItem) => {
+    this.getCourseByIdSubscription = this.courseService.getCourseById(this.routeParams.id).subscribe((res: CourseItem) => {
         this.courseItem = res;
         this.createForm(this.courseItem);
       });
@@ -70,6 +73,11 @@ export class EditCourseComponent implements OnInit {
     this.editCourseForm.value.id = this.courseItem.id;
     this.store$.dispatch(new UpdateCourse({ course: this.editCourseForm.value }));
     this.router.navigate(['/courses']);
+  }
+
+  ngOnDestroy() {
+    this.getCourseByIdSubscription.unsubscribe();
+    this.routeParamsSubscription.unsubscribe();
   }
 
 }
