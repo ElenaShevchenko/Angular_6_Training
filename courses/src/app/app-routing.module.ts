@@ -3,6 +3,8 @@ import { PageNotFoundComponent } from './core/page-not-found/page-not-found.comp
 import { AuthGuard } from './authorization/auth.guard';
 import { AppComponent } from './app.component';
 
+const token = localStorage.getItem('fakeToken') || false;
+
 export const appRoutes: Routes = [
   {
     path: 'login',
@@ -14,7 +16,7 @@ export const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/login',
+    redirectTo: token ? 'courses' : '/login',
     pathMatch: 'full',
   },
   {
