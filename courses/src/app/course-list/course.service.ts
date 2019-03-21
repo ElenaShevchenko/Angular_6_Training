@@ -109,7 +109,6 @@ export class CourseService {
   }
 
   private convertToDBItemsUpdate(item: CourseItem) {
-    console.log(item);
     return {
       id: item.id,
       name: item.title,

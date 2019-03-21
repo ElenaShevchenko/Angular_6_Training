@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -75,7 +75,7 @@ export class CreationDateComponent implements ControlValueAccessor, Validator, O
   }
 
   public translateMes () {
-    const translation = merge(
+    const translation = (
       this.translate.get(['CREATION_DATA', 'FIELD_ARE_INVALID'])
     );
     translation.subscribe((res: {'CREATION_DATA': string, 'FIELD_ARE_INVALID': string} ) => {

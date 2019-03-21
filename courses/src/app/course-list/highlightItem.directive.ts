@@ -1,4 +1,4 @@
-import {Directive, Renderer2, ElementRef, Input, OnInit} from '@angular/core';
+import { Directive, Renderer2, ElementRef, Input, OnInit } from '@angular/core';
 
 @Directive({
   selector: '[appHighlightItem]'

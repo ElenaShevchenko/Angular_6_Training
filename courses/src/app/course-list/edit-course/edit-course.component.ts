@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CourseItem, RouteParamModel } from '../course-item.model';
 import { CourseService } from '../course.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,8 +25,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
     durationInMin: new FormControl(),
     authors: new FormControl()
   });
-  routeParamsSubscription: Subscription;
-  getCourseByIdSubscription: Subscription;
+  private subscriptions = new Subscription();
 
   private formatDate(str) {
     const date = new Date(str);
@@ -50,13 +49,13 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.routeParamsSubscription = this.route.params.subscribe((data) => {
+    this.subscriptions.add(this.route.params.subscribe((data) => {
       this.routeParams.id = data.id;
-    });
-    this.getCourseByIdSubscription = this.courseService.getCourseById(this.routeParams.id).subscribe((res: CourseItem) => {
+    }));
+    this.subscriptions.add(this.courseService.getCourseById(this.routeParams.id).subscribe((res: CourseItem) => {
         this.courseItem = res;
         this.createForm(this.courseItem);
-      });
+    }));
   }
 
   private createForm(item) {
@@ -76,8 +75,7 @@ export class EditCourseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.getCourseByIdSubscription.unsubscribe();
-    this.routeParamsSubscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 
 }

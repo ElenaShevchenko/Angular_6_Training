@@ -1,8 +1,8 @@
-import {Component, Output, EventEmitter, OnDestroy, OnInit} from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, takeUntil, tap } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
-import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
@@ -26,7 +26,6 @@ export class SearchComponent implements OnDestroy, OnInit {
       filter ((term) => term.length > 2),
       distinctUntilChanged(),
       tap((term) => {
-        console.log(term);
         return this.search.emit(term); }),
       takeUntil(this.destroy$),
     ).subscribe();

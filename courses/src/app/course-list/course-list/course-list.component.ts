@@ -29,7 +29,6 @@ export class CourseListComponent implements OnInit, OnDestroy {
     this.store$.dispatch(new GetCourse());
   }
 
-
   doSearch(searchValue) {
     this.store$.dispatch(new Search({ searchValue: searchValue}));
   }

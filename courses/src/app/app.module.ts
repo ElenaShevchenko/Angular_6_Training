@@ -1,14 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { CourseListModule } from './course-list/course-list.module';
 import { UserModule } from './user/user.module';
-import { AuthorizationModule } from './authorization/authorization.module';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app-routing.module';
 import { AuthGuard } from './authorization/auth.guard';
@@ -26,8 +23,9 @@ import { AuthEffects } from './authorization/auth.effects';
 import { appReducer } from './authorization/auth.reducer';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import {MissingTranslationHandler, TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppMissingTranslationHandler } from './missing-translation-handler';
+import { CourseGuard } from './course-list/course.guard';
 
 export function  createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -68,6 +66,7 @@ export function  createTranslateLoader(http: HttpClient) {
   ],
   providers: [
     AuthGuard,
+    CourseGuard,
     AuthorizationService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingScreenInterceptor, multi: true },

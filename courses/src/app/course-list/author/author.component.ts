@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -6,13 +6,13 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
-import {Author, CourseItem} from '../course-item.model';
+import { Author, CourseItem } from '../course-item.model';
 import { select, Store } from '@ngrx/store';
-import {merge, Observable, Subject, Subscription} from 'rxjs';
+import { Observable, Subscription} from 'rxjs';
 import { AppStore } from '../../app-store';
 import { GetAuthors } from '../course.actions';
-import {isArray} from 'util';
-import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
+import { isArray } from 'util';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-author',
@@ -64,7 +64,6 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit,
   public registerOnTouched(fn: any) { }
 
   public validate(c: AbstractControl): ValidationErrors | null {
-    console.log(this.selectedItems);
     return (this.selectedItems !== null && isArray(this.selectedItems) && this.selectedItems.length)
       ? null : { invalidForm: { valid: false, message:  this.invalidMessage } };
   }
@@ -114,7 +113,7 @@ export class AuthorComponent implements ControlValueAccessor, Validator, OnInit,
   }
 
   public translateMes () {
-    const translation = merge(
+    const translation = (
       this.translate.get(['AUTHORS', 'FIELD_ARE_INVALID'])
     );
     translation.subscribe((res: {'AUTHORS': string, 'FIELD_ARE_INVALID': string} ) => {

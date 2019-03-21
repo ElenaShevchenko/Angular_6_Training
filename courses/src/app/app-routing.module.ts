@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
-import { AuthGuard } from './authorization/auth.guard';
-import { AppComponent } from './app.component';
+
 
 const token = localStorage.getItem('fakeToken') || false;
 
@@ -16,7 +15,7 @@ export const appRoutes: Routes = [
   },
   {
     path: '',
-    redirectTo: token ? 'courses' : '/login',
+    redirectTo: '/login',
     pathMatch: 'full',
   },
   {

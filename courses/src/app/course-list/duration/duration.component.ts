@@ -1,4 +1,4 @@
-import {Component, forwardRef, OnDestroy, OnInit} from '@angular/core';
+import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -83,7 +83,7 @@ export class DurationComponent implements ControlValueAccessor, Validator, OnIni
     });
   }
   public translateMes () {
-    const translation = merge(
+    const translation = (
       this.translate.get(['DURATION', 'FIELD_ARE_INVALID'])
     );
     translation.subscribe((res: {'DURATION': string, 'FIELD_ARE_INVALID': string} ) => {

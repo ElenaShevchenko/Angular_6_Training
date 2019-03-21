@@ -16,8 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public title = 'courses';
   public user: User;
   public isAuthenticated$ = new BehaviorSubject(false);
-  private usersSubscription: Subscription;
-  private authServiceSubscription: Subscription;
+  private subscriptions = new Subscription();
 
   constructor(
     private authService: AuthorizationService,
@@ -28,19 +27,19 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-   this.authServiceSubscription = this.authService.isAuthenticated$
+   this.subscriptions.add(this.authService.isAuthenticated$
       .subscribe((val) => {
         this.isAuthenticated$.next(val);
         if (val) {
           this.getUserInfo();
         }
-      });
+      }));
   }
 
   private getUserInfo() {
-    this.usersSubscription = this.authService.getUserInfo().subscribe((res: User) => {
+    this.subscriptions.add(this.authService.getUserInfo().subscribe((res: User) => {
       this.user = res;
-    });
+    }));
   }
 
   logout() {
@@ -48,8 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  public ngOnDestroy(): void {
-    this.usersSubscription.unsubscribe();
-    this.authServiceSubscription.unsubscribe();
+  public ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

@@ -6,7 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { appReducer } from './auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
-import {TranslateModule} from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { AuthorizationRoutingModule } from './authorization-routing.module';
 
 

@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-
+import { CanActivate, Router } from '@angular/router';
 import { AuthorizationService } from './authorization.service';
-import {BehaviorSubject} from 'rxjs';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthorizationService,
+    private router: Router
   ) {
   }
 
   canActivate() {
-    const isTokenExist = localStorage.getItem('fakeToken') || false;
-    return isTokenExist ? true : this.authService.isAuthenticated$;
+   this.authService.isAuthenticated$.subscribe((isAuthenticated: boolean) => {
+      if (isAuthenticated) {
+        this.router.navigate(['/courses']);
+      }
+    });
+    return true;
   }
 }

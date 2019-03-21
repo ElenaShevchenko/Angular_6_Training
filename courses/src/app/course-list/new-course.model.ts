@@ -1,4 +1,4 @@
-import {Author} from './course-item.model';
+import { Author } from './course-item.model';
 
 export interface NewCourseModel {
   title: string;
