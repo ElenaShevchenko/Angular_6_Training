@@ -48,7 +48,7 @@ import { CourseListRoutingModule } from './course-list-routing.module';
     FormsModule,
     RouterModule,
     StoreModule.forFeature('courseList', courseListReducer),
-    EffectsModule.forFeature([CourseEffects]),
+    EffectsModule.forRoot([CourseEffects]),
     ReactiveFormsModule,
     NgMultiSelectDropDownModule,
     TranslateModule,

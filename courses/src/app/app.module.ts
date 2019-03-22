@@ -50,7 +50,7 @@ export function  createTranslateLoader(http: HttpClient) {
       name: 'NgRx Book Store DevTools',
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([CourseEffects, AuthEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     NgMultiSelectDropDownModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
