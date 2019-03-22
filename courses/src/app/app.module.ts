@@ -20,7 +20,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthEffects } from './authorization/auth.effects';
-import { appReducer } from './authorization/auth.reducer';
+import { appReducer } from './app.reducer';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule } from '@ngx-translate/core';

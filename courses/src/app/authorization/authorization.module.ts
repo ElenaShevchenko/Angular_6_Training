@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './auth.reducer';
+import { authReducer } from './auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,7 +15,7 @@ import { AuthorizationRoutingModule } from './authorization-routing.module';
   imports: [
     CommonModule,
     FormsModule,
-    StoreModule.forFeature('isAuthenticated', appReducer),
+    StoreModule.forFeature('isAuthenticated', authReducer),
     EffectsModule.forFeature([AuthEffects]),
     ReactiveFormsModule,
     TranslateModule,

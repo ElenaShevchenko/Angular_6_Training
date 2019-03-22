@@ -2,7 +2,7 @@ const appInitialState = {
   isAuthenticated: false,
 };
 
-export function appReducer(
+export function authReducer(
   state = appInitialState,
   action
 ) {
