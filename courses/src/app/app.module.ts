@@ -13,13 +13,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { AuthorizationService } from './authorization/authorization.service';
 import { AuthInterceptor } from './authorization/auth-interceptor';
 import { LoadingScreenInterceptor } from './core/loading/loading.interceptor';
-import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { CourseEffects } from './course-list/course.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthEffects } from './authorization/auth.effects';
 import { appReducer } from './app.reducer';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -50,7 +47,6 @@ export function  createTranslateLoader(http: HttpClient) {
       name: 'NgRx Book Store DevTools',
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AuthEffects]),
     NgMultiSelectDropDownModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

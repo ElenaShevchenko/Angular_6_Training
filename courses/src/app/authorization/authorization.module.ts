@@ -16,7 +16,7 @@ import { AuthorizationRoutingModule } from './authorization-routing.module';
     CommonModule,
     FormsModule,
     StoreModule.forFeature('isAuthenticated', authReducer),
-    EffectsModule.forFeature([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     ReactiveFormsModule,
     TranslateModule,
     AuthorizationRoutingModule
