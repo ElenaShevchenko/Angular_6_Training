@@ -1,10 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CreationDateComponent } from './creation-date.component';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
-import {DurationPipe} from '../../custom-pipes/duration.pipe';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { createTranslateLoader } from '../../app.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('CreationDateComponent', () => {
   let component: CreationDateComponent;
@@ -14,8 +16,17 @@ describe('CreationDateComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ CreationDateComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-      imports: [ FormsModule,
-        RouterTestingModule ],
+      imports: [  FormsModule,
+                  ReactiveFormsModule,
+                  RouterTestingModule,
+                  TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (createTranslateLoader),
+            deps: [HttpClientTestingModule]
+          }
+        }), ],
+      providers: [HttpClientTestingModule]
     })
     .compileComponents();
   }));

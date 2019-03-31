@@ -1,15 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 
 import { CourseListComponent } from './course-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CourseService } from '../course.service';
 import { OrderByPipe } from '../../custom-pipes/order-by.pipe';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
-import {RouterTestingModule} from '@angular/router/testing';
-import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { createTranslateLoader } from '../../app.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { StoreModule } from '@ngrx/store';
 
 describe('CourseListComponent', () => {
   let component: CourseListComponent;
@@ -26,7 +27,16 @@ describe('CourseListComponent', () => {
       imports: [
         CommonModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (createTranslateLoader),
+            deps: [HttpClientTestingModule]
+          }
+        }),
+        StoreModule.forRoot({}),
       ],
       providers: [ {provide: CourseService, useValue: courseService } ]
     })
@@ -46,7 +56,7 @@ describe('CourseListComponent', () => {
   });
 
   it ('"loadMore" function should be called if user click "load more"', () => {
-    const button = fixture.debugElement.query(By.css('.load-more-button'));
+    const button = fixture.nativeElement.querySelector('.load-more-button');
     component.loadMore = jasmine.createSpy('loadMore');
     button.triggerEventHandler('click', null);
     expect(component.loadMore).toHaveBeenCalled();

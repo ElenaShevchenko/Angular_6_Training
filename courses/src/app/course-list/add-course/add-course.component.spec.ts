@@ -1,11 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddCourseComponent } from './add-course.component';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {HttpClientModule} from '@angular/common/http';
-import {RouterTestingModule} from '@angular/router/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { createTranslateLoader } from '../../app.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AddCourseComponent', () => {
   let component: AddCourseComponent;
@@ -15,8 +16,18 @@ describe('AddCourseComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AddCourseComponent ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+      providers: [HttpClientTestingModule ],
       imports: [ FormsModule,
-                  RouterTestingModule ],
+                  RouterTestingModule,
+                  ReactiveFormsModule,
+                  TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: (createTranslateLoader),
+            deps: [HttpClientTestingModule]
+          }
+        }),
+      ],
     })
     .compileComponents();
   }));
